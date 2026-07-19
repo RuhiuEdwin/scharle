@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# planning/coordination docs (live at the project root, not in this repo)
+/PROJECT.md
+/design/
+/qa/
+/content/COPY.md
