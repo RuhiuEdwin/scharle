@@ -1,0 +1,31 @@
+.card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+.image {
+  height: 160px;
+}
+.body {
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.title {
+  font-size: 22px;
+}
+.meta {
+  font-size: 11px;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.blurb {
+  font-size: 14px;
+  color: var(--text-mute);
+  line-height: 1.5;
+  margin: 0;
+}
