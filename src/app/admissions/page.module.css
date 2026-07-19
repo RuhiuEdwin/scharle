@@ -1,0 +1,131 @@
+.section {
+  padding: var(--sp-7) var(--sp-4);
+  position: relative;
+  overflow: hidden;
+}
+.section.alt {
+  background: var(--bg-alt);
+}
+@media (min-width: 760px) {
+  .section {
+    padding: var(--sp-9) var(--sp-8);
+  }
+}
+.sectionInner {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: var(--sp-3);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+}
+@media (min-width: 760px) {
+  .steps {
+    flex-direction: row;
+  }
+  .steps > * {
+    flex: 1;
+  }
+}
+.step {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+.stepNumber {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--color-blackout);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-anton), sans-serif;
+  font-size: 14px;
+  flex: none;
+}
+.stepTitle {
+  margin: 0 0 4px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 700;
+}
+.stepBody {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--text-mute);
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+}
+@media (min-width: 760px) {
+  .twoCol {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.rule {
+  max-width: 100%;
+  margin-bottom: var(--sp-4);
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline {
+  display: flex;
+  gap: var(--sp-6);
+  margin-top: var(--sp-2);
+  flex-wrap: wrap;
+}
+.intakeItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+.intakeDot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--r-pill);
+  background: var(--line-strong);
+  flex: none;
+}
+.intakeDotActive {
+  background: var(--color-signal-red);
+  box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.14);
+}
+.intakeMonth {
+  font-family: var(--font-anton), sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+.intakeNote {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-signal-red);
+  border: 1px solid var(--color-signal-red);
+  border-radius: var(--r-pill);
+  padding: 3px 8px;
+}
+
+.formTitle {
+  font-size: 24px;
+  margin-bottom: var(--sp-4);
+}

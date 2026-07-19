@@ -1,0 +1,115 @@
+.section {
+  padding: var(--sp-7) var(--sp-4);
+  position: relative;
+  overflow: hidden;
+}
+.section.alt {
+  background: var(--bg-alt);
+}
+@media (min-width: 760px) {
+  .section {
+    padding: var(--sp-9) var(--sp-8);
+  }
+}
+
+.sectionInner {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: var(--sp-3);
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+}
+@media (min-width: 760px) {
+  .twoCol.split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.whoImage {
+  height: 240px;
+}
+
+.headline {
+  font-size: 28px;
+  margin-top: var(--sp-2);
+}
+
+.subHeadline {
+  font-size: 22px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-4);
+}
+@media (min-width: 760px) {
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.cardTitle {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.rule {
+  max-width: 160px;
+  margin: var(--sp-3) 0;
+}
+
+.facultyGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+}
+@media (min-width: 620px) {
+  .facultyGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.facultyCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: var(--sp-4);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+.facultyCard:hover,
+.facultyCard:focus-visible {
+  border-color: var(--color-signal-red);
+  transform: translateY(-3px);
+}
+.facultyAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-pill);
+  background: var(--color-blackout);
+  color: var(--color-bright-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-anton), sans-serif;
+  font-size: 15px;
+}
+.facultyName {
+  font-weight: 700;
+  font-size: 14.5px;
+}
+.facultyRole {
+  color: var(--text-mute);
+  font-size: 12.5px;
+  margin-top: -8px;
+}

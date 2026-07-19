@@ -1,0 +1,18 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+@media (min-width: 760px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.item {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  position: relative;
+  will-change: transform;
+}
