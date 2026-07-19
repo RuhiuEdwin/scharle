@@ -28,7 +28,7 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
                   &ldquo;
                 </span>
                 <p className={styles.quote}>{item.quote}</p>
-                <span className={styles.who}>— {item.who}</span>
+                <span className={styles.who}>- {item.who}</span>
               </div>
             </div>
           ))}

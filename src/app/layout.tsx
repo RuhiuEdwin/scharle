@@ -14,8 +14,8 @@ const SITE_URL =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${siteInfo.name} — ${siteInfo.tagline}`,
-    template: `%s — ${siteInfo.name}`,
+    default: `${siteInfo.name} | ${siteInfo.tagline}`,
+    template: `%s | ${siteInfo.name}`,
   },
   description:
     "Hands-on training in hair, skin, nails, makeup, and barbering at Scharle Beauty College, Outspan Plaza, Nyeri Town.",

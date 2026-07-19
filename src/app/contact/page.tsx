@@ -8,7 +8,7 @@ import { siteInfo } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Scharle Beauty College — phone, email, and our Outspan Plaza, Nyeri Town location.",
+    "Get in touch with Scharle Beauty College: phone, email, and our Outspan Plaza, Nyeri Town location.",
 };
 
 const MAPS_EMBED_SRC =
@@ -24,7 +24,7 @@ export default function Contact() {
           <h1 className={`h-display ${styles.headline}`}>Say hi first</h1>
           <p className="body-text" style={{ fontSize: 14, marginTop: 8 }}>
             Questions about a course, an intake date, or just want to swing
-            by the studio? Send it here — we reply fast.
+            by the studio? Send it here. We reply fast.
           </p>
           <div style={{ marginTop: 16 }}>
             <ContactForm />
@@ -33,9 +33,9 @@ export default function Contact() {
         <Reveal delay={0.1} className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Direct</span>
           <p className={`body-text ${styles.direct}`}>
-            Phone — <strong>{siteInfo.phone}</strong>
+            Phone: <strong>{siteInfo.phone}</strong>
             <br />
-            Email — <strong>{siteInfo.email}</strong>
+            Email: <strong>{siteInfo.email}</strong>
             <br />
             {siteInfo.address}
           </p>
@@ -66,7 +66,7 @@ export default function Contact() {
           <div className={styles.mapFrame}>
             <iframe
               src={MAPS_EMBED_SRC}
-              title="Scharle Beauty College — Outspan Plaza, Nyeri Town"
+              title="Scharle Beauty College: Outspan Plaza, Nyeri Town"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen

@@ -79,14 +79,14 @@ export function Footer() {
             Get intake updates
           </h3>
           <p className={styles.signupNote}>
-            Next intake dates, open days, and new course drops — no spam.
+            Next intake dates, open days, and new course drops. No spam.
           </p>
           <NewsletterSignup />
         </div>
         <p className={styles.contactInfo}>
-          Phone — <strong>{siteInfo.phone}</strong>
+          Phone: <strong>{siteInfo.phone}</strong>
           <br />
-          Email — <strong>{siteInfo.email}</strong>
+          Email: <strong>{siteInfo.email}</strong>
           <br />
           {siteInfo.address}
         </p>

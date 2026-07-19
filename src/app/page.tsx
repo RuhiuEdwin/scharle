@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Scharle Beauty College — hands-on training in hair, skin, nails, makeup, and barbering in Nyeri Town. Learn it. Live it. Glow it.",
+    "Scharle Beauty College: hands-on training in hair, skin, nails, makeup, and barbering in Nyeri Town. Learn it. Live it. Glow it.",
 };
 
 export default function Home() {
@@ -33,7 +33,7 @@ export default function Home() {
             Learn it. Live it. <span className="stamp-word">Glow</span> it.
           </>
         }
-        subcopy="Hands-on training in hair, skin, nails, makeup, and barbering — taught by people who still do the work, in a studio built for real practice, not just theory."
+        subcopy="Hands-on training in hair, skin, nails, makeup, and barbering, taught by people who still do the work, in a studio built for real practice, not just theory."
         slides={[
           { image: siteInfo.heroImage, alt: "Scharle students" },
           { videoUrl: "/videos/hairdressing.mp4", alt: "Hairdressing in progress" },

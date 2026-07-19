@@ -8,7 +8,7 @@ import { galleryItems } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "The Scharle Beauty College studio and student work — Nyeri Town.",
+    "The Scharle Beauty College studio and student work, Nyeri Town.",
 };
 
 export default function Gallery() {

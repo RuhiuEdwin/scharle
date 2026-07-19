@@ -63,7 +63,7 @@ export const courses: Course[] = [
     duration: "6 months",
     intakeMonths: ["January", "May", "September"],
     overview:
-      "Skincare, facials, waxing, and spa treatments — hands-on from week one.",
+      "Skincare, facials, waxing, and spa treatments, hands-on from week one.",
     whatYoullLearn: [
       "Facials & skin analysis",
       "Waxing & hair removal",
@@ -106,7 +106,7 @@ export const courses: Course[] = [
     duration: "4 months",
     intakeMonths: ["January", "May", "September"],
     overview:
-      "Bridal, editorial, and everyday makeup — plus how to build a client book.",
+      "Bridal, editorial, and everyday makeup, plus how to build a client book.",
     whatYoullLearn: [
       "Bridal & editorial makeup",
       "Everyday & special-occasion looks",
@@ -192,7 +192,7 @@ export type WhyScharleHighlight = {
 export const whyScharleHighlights: WhyScharleHighlight[] = [
   {
     title: "Industry pros on the floor",
-    body: "Not just lecturers — working stylists and therapists teach every module.",
+    body: "Not just lecturers: working stylists and therapists teach every module.",
     image: unsplash("1647140655214-e4a2d914971f"),
   },
   {
@@ -202,7 +202,7 @@ export const whyScharleHighlights: WhyScharleHighlight[] = [
   },
   {
     title: "Portfolio from day one",
-    body: "Every project is shot and logged — you graduate with content, not just a certificate.",
+    body: "Every project is shot and logged; you graduate with content, not just a certificate.",
     image: unsplash("1695408247109-3bf125ad0538"),
   },
 ];

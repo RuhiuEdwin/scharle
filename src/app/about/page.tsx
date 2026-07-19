@@ -47,7 +47,7 @@ export default function About() {
           </h1>
           <p className="body-text" style={{ marginTop: 12 }}>
             Scharle trains hairdressers, therapists, makeup artists, nail
-            techs, and barbers in a working studio, not a lecture hall —
+            techs, and barbers in a working studio, not a lecture hall;
             every skill is practiced on real clients before you graduate.
           </p>
         </Reveal>
@@ -73,7 +73,7 @@ export default function About() {
           </h2>
           <AccentRule className={styles.rule} />
           <p className="body-text" style={{ fontSize: 14, marginTop: 8 }}>
-            To be Nyeri&apos;s — and eventually Kenya&apos;s — first call
+            To be Nyeri&apos;s, and eventually Kenya&apos;s, first call
             when a salon, spa, or studio needs someone who already knows the
             chair.
           </p>

@@ -88,8 +88,8 @@ export default async function Admissions(
             ))}
           </StaggerReveal>
           <p className="body-text" style={{ fontSize: 13.5, marginTop: 16 }}>
-            Spots per intake are limited per course to keep chair-time real —
-            apply early for your preferred month.
+            Spots per intake are limited per course to keep chair-time real.
+            Apply early for your preferred month.
           </p>
         </Reveal>
       </section>
