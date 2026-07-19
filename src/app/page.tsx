@@ -1,66 +1,86 @@
-import Image from "next/image";
+import type { Metadata } from "next";
 import styles from "./page.module.css";
+import { HeroCarousel } from "@/components/HeroCarousel";
+import { HorizontalReveal } from "@/components/HorizontalReveal";
+import { CourseCarousel } from "@/components/CourseCarousel";
+import { TestimonialCarousel } from "@/components/TestimonialCarousel";
+import { ButtonLink } from "@/components/Button";
+import { MobileCtaBar } from "@/components/MobileCtaBar";
+import { Reveal } from "@/components/Reveal";
+import { DotGrid } from "@/components/Decorative";
+import {
+  courses,
+  whyScharleHighlights,
+  testimonials,
+  siteInfo,
+} from "@/lib/content";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Scharle Beauty College — hands-on training in hair, skin, nails, makeup, and barbering in Nyeri Town. Learn it. Live it. Glow it.",
+};
 
 export default function Home() {
+  const featured = courses.filter((c) => c.featuredOnHome);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main>
+      <HeroCarousel
+        eyebrow="Nyeri Town · Est. beauty & barbering studio"
+        headline={
+          <>
+            Learn it. Live it. <span className="stamp-word">Glow</span> it.
+          </>
+        }
+        subcopy="Hands-on training in hair, skin, nails, makeup, and barbering — taught by people who still do the work, in a studio built for real practice, not just theory."
+        slides={[
+          { image: siteInfo.heroImage, alt: "Scharle students" },
+          { videoUrl: "/videos/hairdressing.mp4", alt: "Hairdressing in progress" },
+          { image: siteInfo.aboutImage, alt: "Scharle studio interior" },
+        ]}
+      >
+        <ButtonLink href="/admissions" variant="primary" magnetic>
+          Apply Now
+        </ButtonLink>
+        <ButtonLink href="/admissions" variant="secondary">
+          Book a Visit
+        </ButtonLink>
+      </HeroCarousel>
+
+      <HorizontalReveal
+        eyebrow="Why Scharle Hits Different"
+        title="One idea per scroll-stop"
+        items={whyScharleHighlights}
+      />
+
+      <section className={styles.section} style={{ paddingBottom: 0 }}>
+        <DotGrid style={{ width: 260, height: 260, top: 8, right: -60 }} />
+        <Reveal className={styles.sectionInner}>
+          <span className={`label ${styles.eyebrow}`}>Featured Courses</span>
+          <h2 className="h-display" style={{ fontSize: 28 }}>
+            Six paths. One studio.
+          </h2>
+        </Reveal>
+      </section>
+      <CourseCarousel courses={featured} />
+      <div className={styles.seeAllCourses}>
+        <ButtonLink href="/courses" variant="text">
+          See all 6 courses →
+        </ButtonLink>
+      </div>
+
+      <section className={`${styles.section} ${styles.alt}`}>
+        <div className={styles.sectionInner}>
+          <span className={`label ${styles.eyebrow}`}>Student Voices</span>
+          <h2 className="h-display" style={{ fontSize: 28, marginBottom: 28 }}>
+            Slide into student life
+          </h2>
+          <TestimonialCarousel items={testimonials} />
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+
+      <MobileCtaBar />
+    </main>
   );
 }

@@ -1,0 +1,22 @@
+.block {
+  background: linear-gradient(135deg, #d8d3c8, #bcb6a8);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.block.placeholder::after {
+  content: attr(data-caption);
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+}
+
+.img {
+  object-fit: cover;
+}

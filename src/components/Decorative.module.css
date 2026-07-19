@@ -1,0 +1,35 @@
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-signal-red);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+.dotgrid {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(circle, var(--text) 1.5px, transparent 2px);
+  background-size: 26px 26px;
+  opacity: 0.12;
+  will-change: transform, opacity;
+}
+
+.rule {
+  height: 1.5px;
+  width: 100%;
+  background: var(--line-strong);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(closest-side, rgba(255, 0, 0, 0.16), rgba(255, 0, 0, 0) 70%);
+  will-change: transform, opacity;
+}

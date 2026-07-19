@@ -1,0 +1,120 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--r-pill);
+  padding: 12px 22px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+.btn:disabled {
+  cursor: default;
+}
+
+.btn span {
+  position: relative;
+  z-index: 2;
+  transition: color 180ms ease;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease-snap);
+}
+
+.primary {
+  background: var(--color-signal-red);
+  border-color: var(--color-signal-red);
+  color: var(--color-bright-white);
+}
+.primary::before {
+  background: var(--color-blackout);
+}
+.primary:hover::before {
+  transform: scaleX(1);
+}
+
+.secondary {
+  background: transparent;
+  border-color: var(--color-blackout);
+  color: var(--color-blackout);
+}
+.secondary::before {
+  background: var(--color-blackout);
+}
+.secondary:hover::before {
+  transform: scaleX(1);
+}
+.secondary:hover span {
+  color: var(--color-bright-white);
+}
+
+.text {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 13px;
+}
+.text span {
+  background-image: linear-gradient(var(--color-signal-red), var(--color-signal-red));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  padding-bottom: 3px;
+  transition: background-size 220ms var(--ease-snap);
+}
+.text:hover span {
+  background-size: 100% 2px;
+}
+.text::before {
+  display: none;
+}
+
+.full {
+  width: 100%;
+}
+
+.magneticWrap {
+  display: inline-block;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: currentColor;
+  display: inline-block;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.success {
+  background: var(--color-blackout);
+  border-color: var(--color-blackout);
+}
+.success::before {
+  display: none;
+}

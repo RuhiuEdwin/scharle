@@ -1,0 +1,130 @@
+.section {
+  background: var(--bg-alt);
+  overflow: hidden;
+}
+
+.pinTarget {
+  height: 100vh;
+  min-height: 560px;
+  position: relative;
+  overflow: hidden;
+}
+
+.head {
+  position: absolute;
+  top: 32px;
+  left: 24px;
+  z-index: 3;
+  max-width: calc(100vw - 48px);
+  color: var(--color-bright-white);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+@media (min-width: 760px) {
+  .head {
+    left: 64px;
+    top: 48px;
+    /* The image column is always the left half of every panel — keep the
+       head within it so its white/shadowed text never drifts onto the
+       light text-column side, where it would lose contrast. */
+    max-width: calc(50vw - 88px);
+  }
+}
+.head .label {
+  color: rgba(255, 255, 255, 0.85);
+}
+.head h2 {
+  font-size: clamp(22px, 3.4vw, 32px);
+  margin-top: 6px;
+}
+
+.track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+}
+
+.panel {
+  width: 100vw;
+  height: 100%;
+  flex: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 45% 55%;
+}
+@media (min-width: 760px) {
+  .panel {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+.panelImage {
+  position: relative;
+  overflow: hidden;
+}
+
+.panelText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 24px;
+}
+@media (min-width: 760px) {
+  .panelText {
+    padding: 64px;
+  }
+}
+.panelNum {
+  font-family: var(--font-anton), sans-serif;
+  font-size: 64px;
+  color: var(--color-signal-red);
+  opacity: 0.25;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+@media (min-width: 760px) {
+  .panelNum {
+    font-size: 96px;
+  }
+}
+.panelTitle {
+  font-size: clamp(22px, 3.5vw, 34px);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.panelBody {
+  color: var(--text-mute);
+  font-size: 15px;
+  max-width: 42ch;
+}
+
+/* reduced-motion / mobile stacked fallback */
+.stacked .track {
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+.stacked .pinTarget {
+  height: auto;
+  min-height: 0;
+}
+.stacked .panel {
+  width: 100%;
+  height: auto;
+  grid-template-rows: 260px auto;
+}
+.stacked .head {
+  position: static;
+  max-width: none;
+  color: var(--text);
+  text-shadow: none;
+  padding: 48px 24px 0;
+}
+.stacked .head .label {
+  color: var(--text-mute);
+}
+@media (min-width: 760px) {
+  .stacked .head {
+    padding: 64px 64px 0;
+  }
+}

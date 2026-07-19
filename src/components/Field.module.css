@@ -1,0 +1,92 @@
+.field {
+  position: relative;
+  margin-bottom: var(--sp-6);
+}
+.field label {
+  position: absolute;
+  left: 12px;
+  top: 14px;
+  font-size: 15px;
+  color: var(--text-mute);
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 200ms ease, color 200ms ease;
+  z-index: 2;
+}
+.field.floated label {
+  transform: translateY(-22px) scale(0.82);
+}
+/* Red is a focus/error signal, not a resting state — a floated label on
+   its own (e.g. always-floated select/date fields) stays neutral until
+   the field is actually focused or invalid. */
+.field:focus-within label {
+  color: var(--color-signal-red);
+}
+.field.error label {
+  color: var(--color-press-red);
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  font-family: var(--font-archivo), sans-serif;
+  font-size: 15px;
+  padding: 14px 12px 8px;
+  border: none;
+  border-bottom: 1.5px solid var(--line-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  position: relative;
+  z-index: 1;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+}
+.underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: var(--color-signal-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms var(--ease-snap);
+  z-index: 2;
+}
+.field:focus-within .underline {
+  transform: scaleX(1);
+}
+.field.error input,
+.field.error select,
+.field.error textarea {
+  border-bottom-color: var(--color-press-red);
+}
+.errorMsg {
+  display: block;
+  color: var(--color-press-red);
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 var(--sp-4);
+}
+@media (min-width: 760px) {
+  .formGrid.pair {
+    grid-template-columns: 1fr 1fr;
+  }
+}

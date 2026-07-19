@@ -1,0 +1,129 @@
+.carousel {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+.viewport {
+  overflow: hidden;
+}
+.track {
+  display: flex;
+  gap: 20px;
+  cursor: grab;
+}
+.track:active {
+  cursor: grabbing;
+}
+.slide {
+  flex: none;
+  width: 82%;
+  max-width: 380px;
+}
+@media (min-width: 640px) {
+  .slide {
+    width: 360px;
+  }
+}
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 32px 26px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.mark {
+  font-family: var(--font-anton), sans-serif;
+  font-size: 52px;
+  color: var(--color-signal-red);
+  line-height: 1;
+}
+.quote {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--text);
+  flex: 1;
+}
+.who {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-mute);
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1.5px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease, transform 200ms var(--ease-snap);
+  color: var(--text);
+}
+.carousel:hover .arrow,
+.arrow:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.arrow.prev {
+  left: -8px;
+}
+.arrow.next {
+  right: -8px;
+}
+@media (min-width: 760px) {
+  .arrow.prev {
+    left: -22px;
+  }
+  .arrow.next {
+    right: -22px;
+  }
+}
+.arrow:hover {
+  transform: translateY(-50%) scale(1.08);
+  background: var(--color-signal-red);
+  border-color: var(--color-signal-red);
+  color: var(--color-bright-white);
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+.dots button {
+  width: 22px;
+  height: 3px;
+  background: var(--line);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.dots button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-signal-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+.dots button.active::after {
+  transform: scaleX(1);
+}

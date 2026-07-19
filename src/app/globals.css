@@ -1,13 +1,39 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Color — exact values pulled from the logo (see /design/tokens.md) */
+  --color-signal-red: #ff0000;
+  --color-press-red: #b80000;
+  --color-blackout: #000000;
+  --color-ink: #171512;
+  --color-paper: #faf7f2;
+  --color-bright-white: #ffffff;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg: var(--color-bright-white);
+  --bg-alt: var(--color-paper);
+  --text: var(--color-ink);
+  --text-mute: #6b6660;
+  --line: rgba(0, 0, 0, 0.12);
+  --line-strong: rgba(0, 0, 0, 0.35);
+
+  /* Spacing — 4px base grid */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 128px;
+
+  /* Radius — tied to the logo's own geometry */
+  --r-sharp: 0px;
+  --r-soft: 2px;
+  --r-pill: 999px;
+
+  --ease-snap: cubic-bezier(0.16, 1.35, 0.34, 1);
+
+  --max-content: 1280px;
 }
 
 html {
@@ -24,17 +50,15 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-archivo), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
@@ -42,8 +66,127 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+figure {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.h-display {
+  font-family: var(--font-anton), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.98;
+  font-weight: 400;
+}
+
+.label {
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 11px;
+  color: var(--text-mute);
+}
+
+.body-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  max-width: 60ch;
+}
+
+.stamp-word {
+  color: var(--color-signal-red);
+  display: inline-block;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal-red);
+  outline-offset: 2px;
+}
+
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  background: var(--color-signal-red);
+  z-index: 100;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-wipe {
+    animation: wipeAcross 480ms var(--ease-snap) forwards;
+  }
+}
+
+@keyframes wipeAcross {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  49% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+}
+
+.page-enter {
+  opacity: 1;
+}
+
+/* fill-mode is `backwards` only, never `forwards`/`both`: once the
+   animation ends the element must fall back to its plain (non-animated)
+   style — opacity:1, no transform declared — rather than holding the
+   100% keyframe's transform indefinitely. A held transform, even an
+   identity one like translateY(0), computes as a matrix rather than the
+   `none` keyword, and any non-`none` transform on this ancestor turns
+   every `position:fixed` descendant (GSAP ScrollTrigger pins, the mobile
+   menu, the lightbox) into one positioned relative to this wrapper
+   instead of the real viewport. `backwards` still holds the 0% state
+   during animation-delay so there's no flash of unanimated content. */
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter {
+    animation: pageEnter 420ms var(--ease-snap) backwards;
+    animation-delay: 150ms;
+  }
+}
+
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
