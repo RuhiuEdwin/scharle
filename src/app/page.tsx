@@ -14,12 +14,14 @@ import {
   testimonials,
   siteInfo,
 } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Home",
   description:
     "Scharle Beauty College: hands-on training in hair, skin, nails, makeup, and barbering in Nyeri Town. Learn it. Live it. Glow it.",
-};
+  path: "/",
+});
 
 export default function Home() {
   const featured = courses.filter((c) => c.featuredOnHome);

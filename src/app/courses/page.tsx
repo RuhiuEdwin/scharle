@@ -4,12 +4,14 @@ import { CourseCarousel } from "@/components/CourseCarousel";
 import { CourseAccordion } from "@/components/CourseAccordion";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { courses } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Courses",
   description:
     "Six hands-on programs at Scharle Beauty College: Hairdressing & Styling, Beauty Therapy, Cosmetology, Makeup Artistry, Nail Technology, and Barbering.",
-};
+  path: "/courses",
+});
 
 export default function Courses() {
   return (

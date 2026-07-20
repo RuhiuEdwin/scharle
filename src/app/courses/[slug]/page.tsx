@@ -9,7 +9,8 @@ import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { ButtonLink } from "@/components/Button";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { AccentRule, DotGrid } from "@/components/Decorative";
-import { courses, testimonials } from "@/lib/content";
+import { courses, testimonials, siteInfo } from "@/lib/content";
+import { pageMetadata, SITE_URL } from "@/lib/seo";
 
 export function generateStaticParams() {
   return courses.map((c) => ({ slug: c.slug }));
@@ -21,10 +22,11 @@ export async function generateMetadata(
   const { slug } = await props.params;
   const course = courses.find((c) => c.slug === slug);
   if (!course) return {};
-  return {
+  return pageMetadata({
     title: course.name,
     description: `${course.overview} ${course.duration} at Scharle Beauty College, Nyeri Town.`,
-  };
+    path: `/courses/${course.slug}`,
+  });
 }
 
 export default async function CourseDetail(
@@ -39,8 +41,31 @@ export default async function CourseDetail(
   );
   const otherCourses = courses.filter((c) => c.slug !== course.slug);
 
+  const courseJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: course.name,
+    description: course.overview,
+    url: `${SITE_URL}/courses/${course.slug}`,
+    provider: {
+      "@type": "EducationalOrganization",
+      name: siteInfo.name,
+      sameAs: SITE_URL,
+    },
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: "Onsite",
+      duration: course.duration,
+    },
+  };
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
       <CourseCarousel courses={[course]} detailMode />
 
       <section className={styles.section}>

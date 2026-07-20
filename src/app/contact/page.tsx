@@ -4,12 +4,14 @@ import { Reveal } from "@/components/Reveal";
 import { ContactForm } from "@/components/ContactForm";
 import { DotGrid, DecorativeCircle, AccentRule } from "@/components/Decorative";
 import { siteInfo } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description:
     "Get in touch with Scharle Beauty College: phone, email, and our Outspan Plaza, Nyeri Town location.",
-};
+  path: "/contact",
+});
 
 const MAPS_EMBED_SRC =
   "https://www.google.com/maps?q=Outspan+Plaza,+Nyeri+Town,+Kenya&output=embed";

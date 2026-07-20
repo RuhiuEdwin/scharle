@@ -15,16 +15,18 @@ import {
   courses,
   siteInfo,
 } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
 const facultyPicks = courses
   .filter((c) => c.instructors.length > 0)
   .slice(0, 3);
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
   description:
     "Who Scharle Beauty College is, our mission and vision, and what student life looks like at our Nyeri Town studio.",
-};
+  path: "/about",
+});
 
 export default function About() {
   const aboutGallery = studentLifeHighlights.filter((s) => s.showOnAbout);

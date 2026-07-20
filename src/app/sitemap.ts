@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://scharle-staging.example.com";
+import { SITE_URL } from "@/lib/seo";
+import { courses } from "@/lib/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ["", "/about", "/courses", "/admissions", "/gallery", "/contact"];
+  const courseRoutes = courses.map((c) => `/courses/${c.slug}`);
 
-  return routes.map((route) => ({
+  return [...routes, ...courseRoutes].map((route) => ({
     url: `${SITE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly",

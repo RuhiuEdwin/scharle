@@ -4,12 +4,11 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollTriggerRefresh } from "@/components/ScrollTriggerRefresh";
 import { siteInfo } from "@/lib/content";
+import { SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
-// Placeholder until the client supplies a domain / staging subdomain is
-// provisioned in Sprint 2 (see PROJECT.md's Domain timing risk).
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://scharle-staging.example.com";
+const description =
+  "Hands-on training in hair, skin, nails, makeup, and barbering at Scharle Beauty College, Outspan Plaza, Nyeri Town.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -17,14 +16,35 @@ export const metadata: Metadata = {
     default: `${siteInfo.name} | ${siteInfo.tagline}`,
     template: `%s | ${siteInfo.name}`,
   },
-  description:
-    "Hands-on training in hair, skin, nails, makeup, and barbering at Scharle Beauty College, Outspan Plaza, Nyeri Town.",
+  description,
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: `${siteInfo.name} | ${siteInfo.tagline}`,
+    description,
+    url: "/",
+    siteName: siteInfo.name,
+    type: "website",
+    locale: "en_KE",
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteInfo.name} | ${siteInfo.tagline}`,
+    description,
+    images: ["/opengraph-image"],
+  },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
   name: siteInfo.name,
+  url: SITE_URL,
+  logo: `${SITE_URL}/icon.png`,
+  image: `${SITE_URL}/icon.png`,
   description:
     "Beauty and barbering college offering hands-on training in hairdressing, beauty therapy, cosmetology, makeup artistry, nail technology, and barbering.",
   address: {
@@ -35,6 +55,9 @@ const jsonLd = {
   },
   telephone: siteInfo.phone,
   email: siteInfo.email,
+  sameAs: siteInfo.socials
+    .filter((s) => s.url && s.url !== "#")
+    .map((s) => s.url),
 };
 
 export default function RootLayout({

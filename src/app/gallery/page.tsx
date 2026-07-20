@@ -4,12 +4,14 @@ import { GalleryCarousel } from "@/components/GalleryCarousel";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { galleryItems } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Gallery",
   description:
     "The Scharle Beauty College studio and student work, Nyeri Town.",
-};
+  path: "/gallery",
+});
 
 export default function Gallery() {
   return (

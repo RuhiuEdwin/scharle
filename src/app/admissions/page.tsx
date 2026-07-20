@@ -6,12 +6,14 @@ import { BookingForm } from "@/components/BookingForm";
 import { AdmissionsChecklistItem } from "@/components/AdmissionsChecklist";
 import { DecorativeCircle, DotGrid, AccentRule } from "@/components/Decorative";
 import { admissionsSteps, admissionsRequirements } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Admissions",
   description:
     "How to join Scharle Beauty College: requirements, intakes, and booking a school visit in Nyeri Town.",
-};
+  path: "/admissions",
+});
 
 const intakes = [
   { month: "January", note: "Next intake" },
