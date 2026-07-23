@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
         port: "1337",
       },
+      {
+        protocol: "https",
+        hostname: "*.up.railway.app",
+      },
     ],
     // Next's image optimizer refuses to fetch upstream images that resolve
     // to a private/loopback IP (SSRF hardening) — that's exactly what a
