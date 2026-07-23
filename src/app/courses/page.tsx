@@ -3,7 +3,8 @@ import { Reveal } from "@/components/Reveal";
 import { CourseCarousel } from "@/components/CourseCarousel";
 import { CourseAccordion } from "@/components/CourseAccordion";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
-import { courses } from "@/lib/content";
+import { PatternField } from "@/components/Decorative";
+import { getCourses } from "@/lib/strapi";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -13,12 +14,15 @@ export const metadata: Metadata = pageMetadata({
   path: "/courses",
 });
 
-export default function Courses() {
+export default async function Courses() {
+  const courses = await getCourses();
+
   return (
     <main>
       <CourseCarousel courses={courses} />
 
-      <section style={{ padding: "56px 16px 0", maxWidth: 1100, margin: "0 auto" }}>
+      <section style={{ padding: "56px 16px 0", maxWidth: 1100, margin: "0 auto", position: "relative", overflow: "hidden" }}>
+        <PatternField style={{ width: 260, height: 260, top: -20, right: -60 }} />
         <Reveal>
           <span className="label" style={{ display: "block", marginBottom: 12 }}>
             Full Curriculum

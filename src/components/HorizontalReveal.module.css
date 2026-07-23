@@ -75,7 +75,7 @@
   }
 }
 .panelNum {
-  font-family: var(--font-anton), sans-serif;
+  font-family: var(--font-bricolage), sans-serif;
   font-size: 64px;
   color: var(--color-signal-red);
   opacity: 0.25;

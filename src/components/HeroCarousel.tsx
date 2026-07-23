@@ -12,8 +12,7 @@ if (typeof window !== "undefined") {
 }
 
 export type HeroSlide = {
-  image?: string;
-  videoUrl?: string;
+  image: string;
   alt: string;
 };
 
@@ -36,15 +35,10 @@ export function HeroCarousel({
   const [index, setIndex] = useState(0);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mediaRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const animating = useRef(false);
   const autoplayTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const reduced = useRef(false);
-
-  function playVideo(i: number) {
-    videoRefs.current[i]?.play().catch(() => {});
-  }
 
   function goTo(rawIndex: number) {
     if (animating.current) return;
@@ -80,7 +74,6 @@ export function HeroCarousel({
       });
     }
     setIndex(next);
-    playVideo(next);
   }
 
   function resumeAutoplay() {
@@ -92,7 +85,6 @@ export function HeroCarousel({
     reduced.current = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    playVideo(0);
     resumeAutoplay();
     return () => {
       if (autoplayTimer.current) clearInterval(autoplayTimer.current);
@@ -138,29 +130,14 @@ export function HeroCarousel({
               mediaRefs.current[i] = el;
             }}
           >
-            {slide.videoUrl ? (
-              <video
-                ref={(el) => {
-                  videoRefs.current[i] = el;
-                }}
-                muted
-                loop
-                playsInline
-                autoPlay={i === 0}
-                preload={i === 0 ? "auto" : "none"}
-              >
-                <source src={slide.videoUrl} type="video/mp4" />
-              </video>
-            ) : (
-              <Image
-                src={slide.image!}
-                alt={slide.alt}
-                fill
-                sizes="100vw"
-                priority={i === 0}
-                style={{ objectFit: "cover" }}
-              />
-            )}
+            <Image
+              src={slide.image}
+              alt={slide.alt}
+              fill
+              sizes="100vw"
+              priority={i === 0}
+              style={{ objectFit: "cover" }}
+            />
           </div>
           <div className={styles.scrim} />
         </div>

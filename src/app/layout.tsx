@@ -1,72 +1,76 @@
 import type { Metadata } from "next";
-import { anton, archivo } from "./fonts";
+import { bricolage, jakarta } from "./fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollTriggerRefresh } from "@/components/ScrollTriggerRefresh";
-import { siteInfo } from "@/lib/content";
+import { getSiteInfo } from "@/lib/strapi";
 import { SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 const description =
   "Hands-on training in hair, skin, nails, makeup, and barbering at Scharle Beauty College, Outspan Plaza, Nyeri Town.";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: `${siteInfo.name} | ${siteInfo.tagline}`,
-    template: `%s | ${siteInfo.name}`,
-  },
-  description,
-  robots: {
-    index: true,
-    follow: true,
-  },
-  openGraph: {
-    title: `${siteInfo.name} | ${siteInfo.tagline}`,
+export async function generateMetadata(): Promise<Metadata> {
+  const siteInfo = await getSiteInfo();
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: `${siteInfo.name} | ${siteInfo.tagline}`,
+      template: `%s | ${siteInfo.name}`,
+    },
     description,
-    url: "/",
-    siteName: siteInfo.name,
-    type: "website",
-    locale: "en_KE",
-    images: ["/opengraph-image"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${siteInfo.name} | ${siteInfo.tagline}`,
-    description,
-    images: ["/opengraph-image"],
-  },
-};
+    robots: {
+      index: true,
+      follow: true,
+    },
+    openGraph: {
+      title: `${siteInfo.name} | ${siteInfo.tagline}`,
+      description,
+      url: "/",
+      siteName: siteInfo.name,
+      type: "website",
+      locale: "en_KE",
+      images: ["/opengraph-image"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${siteInfo.name} | ${siteInfo.tagline}`,
+      description,
+      images: ["/opengraph-image"],
+    },
+  };
+}
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  name: siteInfo.name,
-  url: SITE_URL,
-  logo: `${SITE_URL}/icon.png`,
-  image: `${SITE_URL}/icon.png`,
-  description:
-    "Beauty and barbering college offering hands-on training in hairdressing, beauty therapy, cosmetology, makeup artistry, nail technology, and barbering.",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: siteInfo.address,
-    addressLocality: "Nyeri",
-    addressCountry: "KE",
-  },
-  telephone: siteInfo.phone,
-  email: siteInfo.email,
-  sameAs: siteInfo.socials
-    .filter((s) => s.url && s.url !== "#")
-    .map((s) => s.url),
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteInfo = await getSiteInfo();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: siteInfo.name,
+    url: SITE_URL,
+    logo: `${SITE_URL}/icon.png`,
+    image: `${SITE_URL}/icon.png`,
+    description:
+      "Beauty and barbering college offering hands-on training in hairdressing, beauty therapy, cosmetology, makeup artistry, nail technology, and barbering.",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteInfo.address,
+      addressLocality: "Nyeri",
+      addressCountry: "KE",
+    },
+    telephone: siteInfo.phone,
+    email: siteInfo.email,
+    sameAs: siteInfo.socials
+      .filter((s) => s.url && s.url !== "#")
+      .map((s) => s.url),
+  };
+
   return (
-    <html lang="en" className={`${anton.variable} ${archivo.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${jakarta.variable}`}>
       <body>
         <script
           type="application/ld+json"

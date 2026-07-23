@@ -29,7 +29,7 @@
 .field select,
 .field textarea {
   width: 100%;
-  font-family: var(--font-archivo), sans-serif;
+  font-family: var(--font-jakarta), sans-serif;
   font-size: 15px;
   padding: 14px 12px 8px;
   border: none;

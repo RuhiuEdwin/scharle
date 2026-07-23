@@ -7,19 +7,15 @@ import { ImgPlaceholder } from "@/components/ImgPlaceholder";
 import { LayeredGrid } from "@/components/LayeredGrid";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
-import { DecorativeCircle, DotGrid, AccentRule } from "@/components/Decorative";
+import { DecorativeCircle, PatternField, AccentRule } from "@/components/Decorative";
 import {
-  whyScharleHighlights,
-  studentLifeHighlights,
-  testimonials,
-  courses,
-  siteInfo,
-} from "@/lib/content";
+  getWhyScharleHighlights,
+  getStudentLifeHighlights,
+  getTestimonials,
+  getCourses,
+  getAboutPage,
+} from "@/lib/strapi";
 import { pageMetadata } from "@/lib/seo";
-
-const facultyPicks = courses
-  .filter((c) => c.instructors.length > 0)
-  .slice(0, 3);
 
 export const metadata: Metadata = pageMetadata({
   title: "About",
@@ -28,8 +24,17 @@ export const metadata: Metadata = pageMetadata({
   path: "/about",
 });
 
-export default function About() {
+export default async function About() {
+  const [whyScharleHighlights, studentLifeHighlights, testimonials, courses, about] =
+    await Promise.all([
+      getWhyScharleHighlights(),
+      getStudentLifeHighlights(),
+      getTestimonials(),
+      getCourses(),
+      getAboutPage(),
+    ]);
   const aboutGallery = studentLifeHighlights.filter((s) => s.showOnAbout);
+  const facultyPicks = courses.filter((c) => c.instructors.length > 0).slice(0, 3);
 
   return (
     <main>
@@ -37,52 +42,42 @@ export default function About() {
         <Reveal>
           <ImgPlaceholder
             caption="Who we are"
-            src={siteInfo.aboutImage}
+            src={about.whoWeAre.image}
             className={styles.whoImage}
             priority
           />
         </Reveal>
         <Reveal delay={0.1}>
           <span className={`label ${styles.eyebrow}`}>Who We Are</span>
-          <h1 className={`h-display ${styles.headline}`}>
-            Nyeri&apos;s studio for real beauty careers
-          </h1>
+          <h1 className={`h-display ${styles.headline}`}>{about.whoWeAre.heading}</h1>
           <p className="body-text" style={{ marginTop: 12 }}>
-            Scharle trains hairdressers, therapists, makeup artists, nail
-            techs, and barbers in a working studio, not a lecture hall;
-            every skill is practiced on real clients before you graduate.
+            {about.whoWeAre.body}
           </p>
         </Reveal>
       </section>
 
       <section className={`${styles.section} ${styles.alt} ${styles.twoCol} ${styles.split}`}>
-        <DotGrid style={{ width: 380, height: 380, top: -40, right: -40 }} />
+        <PatternField style={{ width: 380, height: 380, top: -40, right: -40 }} />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Mission</span>
-          <h2 className={`h-display ${styles.subHeadline}`}>
-            Train real skills, build real confidence
-          </h2>
+          <h2 className={`h-display ${styles.subHeadline}`}>{about.mission.heading}</h2>
           <AccentRule className={styles.rule} />
           <p className="body-text" style={{ fontSize: 14, marginTop: 8 }}>
-            Every graduate leaves with hands-on technique, a client-ready
-            portfolio, and the confidence to work anywhere from day one.
+            {about.mission.body}
           </p>
         </Reveal>
         <Reveal delay={0.1} className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Vision</span>
-          <h2 className={`h-display ${styles.subHeadline}`}>
-            The school the industry hires from
-          </h2>
+          <h2 className={`h-display ${styles.subHeadline}`}>{about.vision.heading}</h2>
           <AccentRule className={styles.rule} />
           <p className="body-text" style={{ fontSize: 14, marginTop: 8 }}>
-            To be Nyeri&apos;s, and eventually Kenya&apos;s, first call
-            when a salon, spa, or studio needs someone who already knows the
-            chair.
+            {about.vision.body}
           </p>
         </Reveal>
       </section>
 
       <section className={styles.section}>
+        <PatternField style={{ width: 300, height: 300, top: -60, left: -60 }} />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>
             Why Scharle Hits Different
@@ -142,6 +137,7 @@ export default function About() {
       </section>
 
       <section className={styles.section}>
+        <PatternField style={{ width: 260, height: 260, bottom: -60, right: -60 }} />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Student Life</span>
           <h2 className="h-display" style={{ fontSize: 26 }}>
@@ -152,6 +148,7 @@ export default function About() {
       </section>
 
       <section className={`${styles.section} ${styles.alt}`}>
+        <PatternField full style={{ inset: 0 }} />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>In Their Words</span>
           <h2 className="h-display" style={{ fontSize: 24, marginBottom: 28 }}>

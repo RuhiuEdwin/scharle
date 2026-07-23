@@ -101,7 +101,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-anton), sans-serif;
+  font-family: var(--font-bricolage), sans-serif;
   font-size: 15px;
 }
 .facultyName {

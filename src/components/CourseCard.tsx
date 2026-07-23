@@ -1,6 +1,6 @@
 import styles from "./CourseCard.module.css";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
-import type { Course } from "@/lib/content";
+import type { Course } from "@/lib/strapi";
 
 export function CourseCard({ course }: { course: Course }) {
   return (

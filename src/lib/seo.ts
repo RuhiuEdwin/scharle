@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { siteInfo } from "./content";
 
-// Placeholder until the client supplies a domain / staging subdomain is
-// provisioned in Sprint 2 (see PROJECT.md's Domain timing risk).
+// Client-confirmed domain (2026-07-23 feedback round) — used everywhere
+// until DNS/hosting is actually pointed at it (see PROJECT.md's Domain
+// timing note); override via NEXT_PUBLIC_SITE_URL for local/staging runs.
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://scharle-staging.example.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://scharlebeauty.com";
 
 export function pageMetadata({
   title,

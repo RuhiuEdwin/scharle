@@ -57,18 +57,21 @@ export function DecorativeCircle({
   );
 }
 
-export function DotGrid({
+export function PatternField({
   style,
   className,
+  full,
 }: {
   style: CSSProperties;
   className?: string;
+  /** Full-bleed hero/divider treatment (lower opacity, larger tile) instead of a small corner accent. */
+  full?: boolean;
 }) {
   const ref = useScrollDrift<HTMLDivElement>({ y: 50, opacity: 0.2 });
   return (
     <div
       ref={ref}
-      className={`${styles.dotgrid} ${className ?? ""}`}
+      className={`${full ? styles.patternFull : styles.pattern} ${className ?? ""}`}
       style={style}
       aria-hidden="true"
     />

@@ -1,10 +1,10 @@
 import { ImageResponse } from "next/og";
 import fs from "node:fs";
 import path from "node:path";
-import { siteInfo } from "@/lib/content";
+import { getSiteInfo } from "@/lib/strapi";
 
 export const runtime = "nodejs";
-export const alt = `${siteInfo.name} | ${siteInfo.tagline}`;
+export const alt = "Scharle Beauty College | Learn It. Live It. Glow It.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -13,6 +13,7 @@ const markSrc = `data:image/png;base64,${fs
   .toString("base64")}`;
 
 export default async function Image() {
+  const siteInfo = await getSiteInfo();
   return new ImageResponse(
     (
       <div

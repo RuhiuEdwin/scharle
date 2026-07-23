@@ -1,7 +1,8 @@
-import { courses, siteInfo } from "@/lib/content";
+import { getCourses, getSiteInfo } from "@/lib/strapi";
 import { SITE_URL } from "@/lib/seo";
 
-export function GET() {
+export async function GET() {
+  const [courses, siteInfo] = await Promise.all([getCourses(), getSiteInfo()]);
   const courseLines = courses
     .map(
       (c) =>

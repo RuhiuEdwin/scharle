@@ -1,17 +1,17 @@
 import localFont from "next/font/local";
 
-export const anton = localFont({
-  src: "../fonts/anton.woff2",
-  weight: "400",
+export const bricolage = localFont({
+  src: "../fonts/bricolage-grotesque.woff2",
+  weight: "200 800",
   style: "normal",
-  variable: "--font-anton",
+  variable: "--font-bricolage",
   display: "swap",
 });
 
-export const archivo = localFont({
-  src: "../fonts/archivo.woff2",
-  weight: "100 900",
+export const jakarta = localFont({
+  src: "../fonts/plus-jakarta-sans.woff2",
+  weight: "200 800",
   style: "normal",
-  variable: "--font-archivo",
+  variable: "--font-jakarta",
   display: "swap",
 });

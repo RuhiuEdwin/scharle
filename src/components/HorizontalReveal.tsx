@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PatternField } from "@/components/Decorative";
 import styles from "./HorizontalReveal.module.css";
 
 if (typeof window !== "undefined") {
@@ -56,6 +57,7 @@ export function HorizontalReveal({
 
   return (
     <section className={`${styles.section} ${stacked ? styles.stacked : ""}`}>
+      <PatternField full style={{ inset: 0 }} />
       <div className={styles.pinTarget} ref={pinTargetRef}>
         <div className={styles.head}>
           <span className="label">{eyebrow}</span>

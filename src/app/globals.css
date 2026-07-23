@@ -1,14 +1,17 @@
 :root {
-  /* Color — exact values pulled from the logo (see /design/tokens.md) */
-  --color-signal-red: #ff0000;
-  --color-press-red: #b80000;
+  /* Color — corrected to match the client's official brand guideline PDF;
+     see /design/BRAND-GUIDELINE-RECONCILIATION.md for the full diff against
+     the Sprint 0 logo-sampled values this supersedes. */
+  --color-signal-red: #ff3131; /* "Neon Red", official guideline value */
+  --color-press-red: #e01717; /* recomputed hover/active shade of the corrected red */
   --color-blackout: #000000;
-  --color-ink: #171512;
-  --color-paper: #faf7f2;
+  --color-ink: #171512; /* legibility refinement, not a brand color — body text only */
+  --color-soft-linen: #e6ebe0; /* official accent, replaces guessed "paper" tone */
+  --color-amber: #f2b046; /* official accent — badges/highlights only, never buttons/links */
   --color-bright-white: #ffffff;
 
   --bg: var(--color-bright-white);
-  --bg-alt: var(--color-paper);
+  --bg-alt: var(--color-soft-linen);
   --text: var(--color-ink);
   --text-mute: #6b6660;
   --line: rgba(0, 0, 0, 0.12);
@@ -52,7 +55,7 @@ body {
   flex-direction: column;
   color: var(--text);
   background: var(--bg);
-  font-family: var(--font-archivo), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -82,7 +85,7 @@ figure {
 }
 
 .h-display {
-  font-family: var(--font-anton), sans-serif;
+  font-family: var(--font-bricolage), sans-serif;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   line-height: 0.98;
@@ -90,7 +93,7 @@ figure {
 }
 
 .label {
-  font-family: var(--font-archivo), sans-serif;
+  font-family: var(--font-jakarta), sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.09em;

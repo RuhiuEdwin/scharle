@@ -5,7 +5,7 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import styles from "./CourseCarousel.module.css";
 import { ButtonLink } from "@/components/Button";
-import type { Course } from "@/lib/content";
+import type { Course } from "@/lib/strapi";
 
 const EASE_SNAP = "expo.out";
 
@@ -23,7 +23,6 @@ export function CourseCarousel({
   const stageRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mediaRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const animating = useRef(false);
   const touchStartX = useRef<number | null>(null);
   const reduced = useRef(false);
@@ -33,10 +32,6 @@ export function CourseCarousel({
       "(prefers-reduced-motion: reduce)",
     ).matches;
   }, []);
-
-  function playVideo(i: number) {
-    videoRefs.current[i]?.play().catch(() => {});
-  }
 
   function kenBurns(i: number) {
     const media = mediaRefs.current[i];
@@ -94,14 +89,11 @@ export function CourseCarousel({
     }
 
     setIndex(nextIndex);
-    playVideo(nextIndex);
     kenBurns(nextIndex);
   }
 
   useEffect(() => {
-    playVideo(0);
     kenBurns(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -145,29 +137,14 @@ export function CourseCarousel({
               mediaRefs.current[i] = el;
             }}
           >
-            {course.videoUrl ? (
-              <video
-                ref={(el) => {
-                  videoRefs.current[i] = el;
-                }}
-                muted
-                loop
-                playsInline
-                autoPlay={i === 0}
-                preload={i === 0 ? "auto" : "none"}
-              >
-                <source src={course.videoUrl} type="video/mp4" />
-              </video>
-            ) : (
-              <Image
-                src={course.image}
-                alt={course.name}
-                fill
-                sizes="100vw"
-                priority={i === 0}
-                style={{ objectFit: "cover" }}
-              />
-            )}
+            <Image
+              src={course.image}
+              alt={course.name}
+              fill
+              sizes="100vw"
+              priority={i === 0}
+              style={{ objectFit: "cover" }}
+            />
           </div>
           <div className={styles.scrim} />
           <div className={styles.deco} aria-hidden="true" />

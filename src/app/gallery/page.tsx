@@ -3,7 +3,8 @@ import { Reveal } from "@/components/Reveal";
 import { GalleryCarousel } from "@/components/GalleryCarousel";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
-import { galleryItems } from "@/lib/content";
+import { PatternField } from "@/components/Decorative";
+import { getGalleryItems } from "@/lib/strapi";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -13,10 +14,13 @@ export const metadata: Metadata = pageMetadata({
   path: "/gallery",
 });
 
-export default function Gallery() {
+export default async function Gallery() {
+  const galleryItems = await getGalleryItems();
+
   return (
     <main>
-      <section style={{ padding: "48px 16px 24px" }}>
+      <section style={{ padding: "48px 16px 24px", position: "relative", overflow: "hidden" }}>
+        <PatternField style={{ width: 240, height: 240, top: -30, right: -40 }} />
         <Reveal>
           <span className="label" style={{ display: "block", marginBottom: 12 }}>
             Gallery

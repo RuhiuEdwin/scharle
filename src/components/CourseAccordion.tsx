@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import styles from "./CourseAccordion.module.css";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
 import { ButtonLink } from "@/components/Button";
-import type { Course } from "@/lib/content";
+import type { Course } from "@/lib/strapi";
 
 const EASE_SNAP = [0.16, 1.35, 0.34, 1] as const;
 

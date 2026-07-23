@@ -4,8 +4,9 @@ import { Reveal } from "@/components/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import { BookingForm } from "@/components/BookingForm";
 import { AdmissionsChecklistItem } from "@/components/AdmissionsChecklist";
-import { DecorativeCircle, DotGrid, AccentRule } from "@/components/Decorative";
-import { admissionsSteps, admissionsRequirements } from "@/lib/content";
+import { DecorativeCircle, PatternField, AccentRule } from "@/components/Decorative";
+import { ButtonLink } from "@/components/Button";
+import { getAdmissionsPage, getPaymentInfo, getCourses, getSiteInfo } from "@/lib/strapi";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -15,11 +16,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/admissions",
 });
 
-const intakes = [
-  { month: "January", note: "Next intake" },
-  { month: "May", note: "" },
-  { month: "September", note: "" },
-];
+const intakeMonths = ["January", "May", "September"];
 
 export default async function Admissions(
   props: PageProps<"/admissions">,
@@ -28,6 +25,18 @@ export default async function Admissions(
   const courseParam = searchParams?.course;
   const defaultCourseSlug =
     typeof courseParam === "string" ? courseParam : undefined;
+
+  const [admissionsPage, paymentInfo, courses, siteInfo] = await Promise.all([
+    getAdmissionsPage(),
+    getPaymentInfo(),
+    getCourses(),
+    getSiteInfo(),
+  ]);
+  const { steps: admissionsSteps, requirements: admissionsRequirements } = admissionsPage;
+  const intakes = intakeMonths.map((month) => ({
+    month,
+    note: month === admissionsPage.activeIntakeMonth ? "Next intake" : "",
+  }));
 
   return (
     <main>
@@ -96,8 +105,51 @@ export default async function Admissions(
         </Reveal>
       </section>
 
+      <section className={`${styles.section} ${styles.alt}`}>
+        <Reveal className={styles.sectionInner}>
+          <span className={`label ${styles.eyebrow}`}>
+            {paymentInfo.sectionTitle}
+          </span>
+          <h2 className="h-display" style={{ fontSize: 26 }}>
+            Two ways to pay
+          </h2>
+          <p className="body-text" style={{ fontSize: 14, marginTop: 8 }}>
+            {paymentInfo.introNote}
+          </p>
+
+          <div className={styles.feeSummary}>
+            <div>
+              <span className={`h-display ${styles.feeAmount}`}>
+                {paymentInfo.registrationFee}
+              </span>
+              <span className={`label ${styles.feeLabel}`}>Registration fee</span>
+            </div>
+            <div>
+              <p className="body-text" style={{ fontSize: 13.5, maxWidth: "42ch" }}>
+                {paymentInfo.tuitionNote}
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.channels}>
+            {paymentInfo.channels.map((channel) => (
+              <div className={styles.channel} key={channel.label}>
+                <span className={`label ${styles.channelLabel}`}>{channel.label}</span>
+                {channel.lines.map((line) => (
+                  <p className={styles.channelLine} key={line}>
+                    {line}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <p className={styles.disclaimer}>{paymentInfo.disclaimer}</p>
+        </Reveal>
+      </section>
+
       <section className={styles.section}>
-        <DotGrid style={{ width: 240, height: 240, bottom: -60, left: -60 }} />
+        <PatternField style={{ width: 240, height: 240, bottom: -60, left: -60 }} />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>
             Book a School Visit
@@ -105,7 +157,17 @@ export default async function Admissions(
           <h2 className={`h-display ${styles.formTitle}`}>
             See the studio first
           </h2>
-          <BookingForm defaultCourseSlug={defaultCourseSlug} />
+          <BookingForm defaultCourseSlug={defaultCourseSlug} courses={courses} />
+          {siteInfo.calendlyUrl && (
+            <div className={styles.calendlyRow}>
+              <span className="body-text" style={{ fontSize: 13.5 }}>
+                Prefer to just pick a time yourself?
+              </span>
+              <ButtonLink href={siteInfo.calendlyUrl} variant="text" external>
+                Book a discovery call on Calendly →
+              </ButtonLink>
+            </div>
+          )}
         </Reveal>
       </section>
     </main>

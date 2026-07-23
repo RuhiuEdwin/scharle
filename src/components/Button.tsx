@@ -59,12 +59,15 @@ export function ButtonLink({
   children,
   full,
   magnetic,
+  external,
 }: {
   href: string;
   variant?: Variant;
   children: ReactNode;
   full?: boolean;
   magnetic?: boolean;
+  /** Opens in a new tab with rel="noreferrer" — for links off-site (e.g. Calendly). */
+  external?: boolean;
 }) {
   const wrapRef = useMagnetic(magnetic);
   const btn = (
@@ -72,6 +75,7 @@ export function ButtonLink({
       href={href}
       className={`${styles.btn} ${variantClass[variant]} ${full ? styles.full : ""}`}
       whileTap={{ scale: 0.97 }}
+      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
     >
       <span>{children}</span>
     </MotionLink>

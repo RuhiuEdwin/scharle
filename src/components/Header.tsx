@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
@@ -66,7 +67,7 @@ export function Header() {
     <header className={`${styles.header} ${shrunk ? styles.shrunk : ""}`}>
       <Link href="/" className={styles.mark}>
         <span className={styles.circle} aria-hidden="true">
-          S
+          <Image src="/logo-mark.png" alt="" width={28} height={28} priority />
         </span>
         <span className={styles.wordLockup}>
           <span className={styles.primary}>SCHARLE</span>

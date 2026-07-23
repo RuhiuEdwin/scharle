@@ -54,15 +54,8 @@
   font-size: 20px;
   cursor: pointer;
   z-index: 5;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 200ms ease, transform 200ms var(--ease-snap);
+  transition: transform 200ms var(--ease-snap), background 200ms ease;
   color: var(--color-blackout);
-}
-.carousel:hover .arrow,
-.arrow:focus-visible {
-  opacity: 1;
-  pointer-events: auto;
 }
 .arrow.prev {
   left: 16px;

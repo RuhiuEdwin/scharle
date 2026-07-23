@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Field, fieldStyles } from "@/components/Field";
 import { Button, type ButtonStatus } from "@/components/Button";
-import { courses } from "@/lib/content";
+import type { Course } from "@/lib/strapi";
 
 // Submission (storage + admin email + honeypot/rate-limit enforcement) is
 // wired up in Sprint 4 against real BookingRequest endpoints. The
@@ -11,10 +11,12 @@ import { courses } from "@/lib/content";
 // placeholder timeout until that fetch call exists.
 export function BookingForm({
   defaultCourseSlug,
+  courses,
 }: {
   /** Pre-selects "Course of interest" — set when arriving via a course
    * detail page's enquiry CTA (`/admissions?course=<slug>`). */
   defaultCourseSlug?: string;
+  courses: Course[];
 }) {
   const [status, setStatus] = useState<ButtonStatus>("idle");
 

@@ -8,11 +8,20 @@ import { CourseCarousel } from "@/components/CourseCarousel";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { ButtonLink } from "@/components/Button";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
-import { AccentRule, DotGrid } from "@/components/Decorative";
-import { courses, testimonials, siteInfo } from "@/lib/content";
+import { AccentRule, PatternField } from "@/components/Decorative";
+import { FAQAccordion } from "@/components/FAQAccordion";
+import { ImgPlaceholder } from "@/components/ImgPlaceholder";
+import {
+  getCourses,
+  getCourseBySlug,
+  getTestimonials,
+  getSiteInfo,
+  getGalleryItemsForCourse,
+} from "@/lib/strapi";
 import { pageMetadata, SITE_URL } from "@/lib/seo";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const courses = await getCourses();
   return courses.map((c) => ({ slug: c.slug }));
 }
 
@@ -20,7 +29,7 @@ export async function generateMetadata(
   props: PageProps<"/courses/[slug]">,
 ): Promise<Metadata> {
   const { slug } = await props.params;
-  const course = courses.find((c) => c.slug === slug);
+  const course = await getCourseBySlug(slug);
   if (!course) return {};
   return pageMetadata({
     title: course.name,
@@ -33,13 +42,19 @@ export default async function CourseDetail(
   props: PageProps<"/courses/[slug]">,
 ) {
   const { slug } = await props.params;
-  const course = courses.find((c) => c.slug === slug);
+  const [course, allCourses, testimonials, siteInfo, courseGallery] = await Promise.all([
+    getCourseBySlug(slug),
+    getCourses(),
+    getTestimonials(),
+    getSiteInfo(),
+    getGalleryItemsForCourse(slug),
+  ]);
   if (!course) notFound();
 
   const courseTestimonials = testimonials.filter(
     (t) => t.courseSlug === course.slug,
   );
-  const otherCourses = courses.filter((c) => c.slug !== course.slug);
+  const otherCourses = allCourses.filter((c) => c.slug !== course.slug);
 
   const courseJsonLd = {
     "@context": "https://schema.org",
@@ -69,7 +84,28 @@ export default async function CourseDetail(
       <CourseCarousel courses={[course]} detailMode />
 
       <section className={styles.section}>
-        <DotGrid style={{ width: 260, height: 260, top: 0, right: -60 }} />
+        <Reveal className={styles.sectionInner}>
+          <div className={styles.glance}>
+            <div>
+              <span className="label">Duration</span>
+              <p className={`h-display ${styles.glanceValue}`}>{course.duration}</p>
+            </div>
+            <div>
+              <span className="label">Intakes</span>
+              <p className={`h-display ${styles.glanceValue}`}>{course.intakeMonths.join(" / ")}</p>
+            </div>
+            {course.fee && (
+              <div>
+                <span className="label">Fee</span>
+                <p className={`h-display ${styles.glanceValue}`}>{course.fee}</p>
+              </div>
+            )}
+          </div>
+        </Reveal>
+      </section>
+
+      <section className={styles.section}>
+        <PatternField style={{ width: 260, height: 260, top: 0, right: -60 }} />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Curriculum</span>
           <h2 className="h-display" style={{ fontSize: 28 }}>
@@ -127,6 +163,27 @@ export default async function CourseDetail(
         </Reveal>
       </section>
 
+      {courseGallery.length > 0 && (
+        <section className={styles.section}>
+          <Reveal className={styles.sectionInner}>
+            <span className={`label ${styles.eyebrow}`}>From the Studio</span>
+            <h2 className="h-display" style={{ fontSize: 24 }}>
+              {course.name} in practice
+            </h2>
+            <div className={styles.gallery}>
+              {courseGallery.map((item) => (
+                <ImgPlaceholder
+                  key={item.caption}
+                  caption={item.caption}
+                  src={item.image}
+                  className={styles.galleryImage}
+                />
+              ))}
+            </div>
+          </Reveal>
+        </section>
+      )}
+
       {courseTestimonials.length > 0 && (
         <section className={`${styles.section} ${styles.alt}`}>
           <Reveal className={styles.sectionInner}>
@@ -137,6 +194,19 @@ export default async function CourseDetail(
               Hear it from them
             </h2>
             <TestimonialCarousel items={courseTestimonials} />
+          </Reveal>
+        </section>
+      )}
+
+      {course.faqs.length > 0 && (
+        <section className={styles.section}>
+          <PatternField style={{ width: 220, height: 220, top: -40, left: -60 }} />
+          <Reveal className={styles.sectionInner}>
+            <span className={`label ${styles.eyebrow}`}>FAQs</span>
+            <h2 className="h-display" style={{ fontSize: 24, marginBottom: 12 }}>
+              Common questions
+            </h2>
+            <FAQAccordion items={course.faqs} />
           </Reveal>
         </section>
       )}

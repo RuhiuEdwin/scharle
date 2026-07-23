@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
-import { courses } from "@/lib/content";
+import { getCourses } from "@/lib/strapi";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const courses = await getCourses();
   const routes = ["", "/about", "/courses", "/admissions", "/gallery", "/contact"];
   const courseRoutes = courses.map((c) => `/courses/${c.slug}`);
 

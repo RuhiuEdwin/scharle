@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "./Gallery.module.css";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
-import type { GalleryItem } from "@/lib/content";
+import type { GalleryItem } from "@/lib/strapi";
 
 const CATEGORIES = ["All", "Studio", "Students"] as const;
 const EASE_SNAP = [0.16, 1.35, 0.34, 1] as const;

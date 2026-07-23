@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Footer.module.css";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { siteInfo, courses } from "@/lib/content";
+import { SocialIcon } from "@/components/SocialIcon";
+import { getSiteInfo, getCourses } from "@/lib/strapi";
 
 const linkGroups = [
   {
@@ -22,14 +24,16 @@ const linkGroups = [
   },
 ];
 
-export function Footer() {
+export async function Footer() {
+  const [siteInfo, courses] = await Promise.all([getSiteInfo(), getCourses()]);
+
   return (
     <footer className={styles.footer}>
       <div className={styles.top}>
         <div className={styles.brandCol}>
           <Link href="/" className={styles.mark}>
             <span className={styles.circle} aria-hidden="true">
-              S
+              <Image src="/logo-mark.png" alt="" width={28} height={28} />
             </span>
             <span className={styles.wordLockup}>
               <span className={styles.primary}>SCHARLE</span>
@@ -39,9 +43,7 @@ export function Footer() {
           <p className={styles.tagline}>{siteInfo.tagline}</p>
           <div className={styles.socialRow}>
             {siteInfo.socials.map((s) => (
-              <a key={s.platform} href={s.url} aria-label={s.platform}>
-                {s.short}
-              </a>
+              <SocialIcon key={s.platform} platform={s.platform} url={s.url} />
             ))}
           </div>
         </div>

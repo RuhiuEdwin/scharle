@@ -7,13 +7,14 @@ import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { ButtonLink } from "@/components/Button";
 import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { Reveal } from "@/components/Reveal";
-import { DotGrid } from "@/components/Decorative";
+import { PatternField } from "@/components/Decorative";
 import {
-  courses,
-  whyScharleHighlights,
-  testimonials,
-  siteInfo,
-} from "@/lib/content";
+  getCourses,
+  getWhyScharleHighlights,
+  getTestimonials,
+  getHomePage,
+  getAboutPage,
+} from "@/lib/strapi";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -23,23 +24,31 @@ export const metadata: Metadata = pageMetadata({
   path: "/",
 });
 
-export default function Home() {
+export default async function Home() {
+  const [courses, whyScharleHighlights, testimonials, home, about] = await Promise.all([
+    getCourses(),
+    getWhyScharleHighlights(),
+    getTestimonials(),
+    getHomePage(),
+    getAboutPage(),
+  ]);
   const featured = courses.filter((c) => c.featuredOnHome);
+  const hairdressing = courses.find((c) => c.slug === "hairdressing-styling");
 
   return (
     <main>
       <HeroCarousel
-        eyebrow="Nyeri Town · Est. beauty & barbering studio"
+        eyebrow={home.heroEyebrow}
         headline={
           <>
             Learn it. Live it. <span className="stamp-word">Glow</span> it.
           </>
         }
-        subcopy="Hands-on training in hair, skin, nails, makeup, and barbering, taught by people who still do the work, in a studio built for real practice, not just theory."
+        subcopy={home.heroSubcopy}
         slides={[
-          { image: siteInfo.heroImage, alt: "Scharle students" },
-          { videoUrl: "/videos/hairdressing.mp4", alt: "Hairdressing in progress" },
-          { image: siteInfo.aboutImage, alt: "Scharle studio interior" },
+          { image: home.heroImages[0], alt: "Scharle students" },
+          ...(hairdressing ? [{ image: hairdressing.image, alt: "Hairdressing in progress" }] : []),
+          { image: about.whoWeAre.image, alt: "Scharle studio interior" },
         ]}
       >
         <ButtonLink href="/admissions" variant="primary" magnetic>
@@ -57,7 +66,7 @@ export default function Home() {
       />
 
       <section className={styles.section} style={{ paddingBottom: 0 }}>
-        <DotGrid style={{ width: 260, height: 260, top: 8, right: -60 }} />
+        <PatternField style={{ width: 260, height: 260, top: 8, right: -60 }} />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Featured Courses</span>
           <h2 className="h-display" style={{ fontSize: 28 }}>
@@ -73,13 +82,14 @@ export default function Home() {
       </div>
 
       <section className={`${styles.section} ${styles.alt}`}>
-        <div className={styles.sectionInner}>
+        <PatternField full style={{ inset: 0 }} />
+        <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Student Voices</span>
           <h2 className="h-display" style={{ fontSize: 28, marginBottom: 28 }}>
             Slide into student life
           </h2>
           <TestimonialCarousel items={testimonials} />
-        </div>
+        </Reveal>
       </section>
 
       <MobileCtaBar />

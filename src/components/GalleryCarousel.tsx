@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./GalleryCarousel.module.css";
 import { useDragCarousel } from "@/lib/useDragCarousel";
-import type { GalleryItem } from "@/lib/content";
+import type { GalleryItem } from "@/lib/strapi";
 
 export function GalleryCarousel({ items }: { items: GalleryItem[] }) {
   const { index, goTo, carouselRef, trackRef, onMouseEnter, onMouseLeave } =

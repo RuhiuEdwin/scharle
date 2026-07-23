@@ -28,8 +28,6 @@ export type Course = {
   instructors: { name: string; role: string }[];
   featuredOnHome: boolean;
   image: string;
-  /** Background video for the full-page Courses carousel, if sourced. */
-  videoUrl?: string;
 };
 
 export const courses: Course[] = [
@@ -55,7 +53,6 @@ export const courses: Course[] = [
     instructors: [{ name: "Grace Mwangi", role: "Lead Hairdressing Instructor" }],
     featuredOnHome: true,
     image: unsplash("1634449571010-02389ed0f9b0"),
-    videoUrl: "/videos/hairdressing.mp4",
   },
   {
     slug: "beauty-therapy",
@@ -162,7 +159,6 @@ export const courses: Course[] = [
     instructors: [{ name: "Brian Otieno", role: "Lead Barbering Instructor" }],
     featuredOnHome: false,
     image: unsplash("1647140655214-e4a2d914971f"),
-    videoUrl: "/videos/barbering.mp4",
   },
 ];
 
@@ -268,6 +264,48 @@ export const admissionsRequirements = [
   "2 passport photos",
   "Registration fee",
 ];
+
+/** Payment channel display only — no gateway integration. Every value below
+ * is a placeholder pending real account details from the client (see
+ * EXECUTION-PLAN-client-feedback-2026-07-23.md item 4); swap via CMS once
+ * Strapi is live, zero dev work either way. */
+export type PaymentInfo = {
+  sectionTitle: string;
+  introNote: string;
+  registrationFee: string;
+  tuitionNote: string;
+  channels: { label: string; lines: string[] }[];
+  disclaimer: string;
+};
+
+export const paymentInfo: PaymentInfo = {
+  sectionTitle: "Fees & Payment Options",
+  introNote:
+    "Pay registration and tuition through either channel below. Bring your receipt/M-Pesa message with you on visit or intake day.",
+  registrationFee: "KES 5,000",
+  tuitionNote: "From KES 45,000 per term, course-dependent — confirmed exactly during your visit or application review.",
+  channels: [
+    {
+      label: "Bank Transfer",
+      lines: [
+        "Equity Bank Kenya",
+        "Acc. Name: Scharle Beauty College Ltd",
+        "Acc. No: 0000000000000",
+        "Branch: Nyeri",
+      ],
+    },
+    {
+      label: "M-Pesa Paybill",
+      lines: [
+        "Paybill No: 000000",
+        "Account No: Your full name",
+        "Confirm SMS before your visit",
+      ],
+    },
+  ],
+  disclaimer:
+    "All figures and account details above are placeholders pending final confirmation from the college — do not send payment against them yet.",
+};
 
 export const siteInfo = {
   name: "Scharle Beauty College",

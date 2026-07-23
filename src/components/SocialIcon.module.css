@@ -1,0 +1,18 @@
+.badge {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-pill);
+  background: var(--color-signal-red);
+  color: var(--color-bright-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex: none;
+  transition: background 180ms ease, transform 180ms var(--ease-snap);
+}
+.badge:hover {
+  background: var(--color-press-red);
+  transform: translateY(-2px);
+}
