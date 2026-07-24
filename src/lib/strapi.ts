@@ -38,7 +38,7 @@ export type Course = {
   overview: string;
   whatYoullLearn: string[];
   careerOutcomes: string[];
-  instructors: { name: string; role: string }[];
+  instructors: { name: string; role: string; image: string }[];
   faqs: { question: string; answer: string }[];
   featuredOnHome: boolean;
   image: string;
@@ -53,7 +53,7 @@ type RawCourse = {
   overview: string;
   whatYoullLearn: ListItem[];
   careerOutcomes: ListItem[];
-  instructors: { name: string; role: string }[];
+  instructors: { name: string; role: string; image: StrapiMedia | null }[];
   faqs: { question: string; answer: string }[];
   featuredOnHome: boolean;
   heroImage: StrapiMedia | null;
@@ -61,7 +61,7 @@ type RawCourse = {
 };
 
 const COURSE_POPULATE =
-  "populate[heroImage]=true&populate[whatYoullLearn]=true&populate[careerOutcomes]=true&populate[instructors]=true&populate[intakeMonths]=true&populate[faqs]=true";
+  "populate[heroImage]=true&populate[whatYoullLearn]=true&populate[careerOutcomes]=true&populate[instructors][populate]=image&populate[intakeMonths]=true&populate[faqs]=true";
 
 function mapCourse(c: RawCourse): Course {
   return {
@@ -73,7 +73,11 @@ function mapCourse(c: RawCourse): Course {
     overview: c.overview,
     whatYoullLearn: c.whatYoullLearn.map((i) => i.text),
     careerOutcomes: c.careerOutcomes.map((i) => i.text),
-    instructors: c.instructors ?? [],
+    instructors: (c.instructors ?? []).map((inst) => ({
+      name: inst.name,
+      role: inst.role,
+      image: mediaUrl(inst.image),
+    })),
     faqs: c.faqs ?? [],
     featuredOnHome: c.featuredOnHome,
     image: mediaUrl(c.heroImage),
@@ -165,6 +169,7 @@ export type Testimonial = {
   quote: string;
   who: string;
   courseSlug: string;
+  image: string;
 };
 
 type RawStudentLifeHighlight = {
@@ -196,7 +201,12 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     .filter((s): s is RawStudentLifeHighlight & { quote: string; attribution: string; course: { slug: string } } =>
       Boolean(s.quote && s.attribution && s.course),
     )
-    .map((s) => ({ quote: s.quote, who: s.attribution, courseSlug: s.course.slug }));
+    .map((s) => ({
+      quote: s.quote,
+      who: s.attribution,
+      courseSlug: s.course.slug,
+      image: mediaUrl(s.image),
+    }));
 }
 
 // ---------------------------------------------------------------------------

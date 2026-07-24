@@ -115,12 +115,20 @@ export default async function About() {
                     href={`/courses/${course.slug}`}
                     className={styles.facultyCard}
                   >
-                    <span className={styles.facultyAvatar} aria-hidden="true">
-                      {instructor.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </span>
+                    {instructor.image ? (
+                      <ImgPlaceholder
+                        caption={instructor.name}
+                        src={instructor.image}
+                        className={styles.facultyAvatarImage}
+                      />
+                    ) : (
+                      <span className={styles.facultyAvatar} aria-hidden="true">
+                        {instructor.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </span>
+                    )}
                     <span className={styles.facultyName}>
                       {instructor.name}
                     </span>

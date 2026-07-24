@@ -146,12 +146,20 @@ export default async function CourseDetail(
           <div className={styles.instructors}>
             {course.instructors.map((inst) => (
               <div className={styles.instructorCard} key={inst.name}>
-                <span className={styles.avatar} aria-hidden="true">
-                  {inst.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </span>
+                {inst.image ? (
+                  <ImgPlaceholder
+                    caption={inst.name}
+                    src={inst.image}
+                    className={styles.avatarImage}
+                  />
+                ) : (
+                  <span className={styles.avatar} aria-hidden="true">
+                    {inst.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </span>
+                )}
                 <div>
                   <p className={styles.instructorName}>{inst.name}</p>
                   <p className={styles.instructorRole}>{inst.role}</p>

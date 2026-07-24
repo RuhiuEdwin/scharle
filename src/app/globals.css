@@ -64,15 +64,18 @@
 
 html {
   height: 100%;
-}
-
-html,
-body {
   max-width: 100vw;
   overflow-x: hidden;
 }
 
 body {
+  /* Deliberately no overflow-x here (even though visually it'd be
+     redundant with html's) — overflow set to anything other than
+     `visible` on a `position: sticky` element's own ancestor is a known
+     trigger for sticky silently breaking in mobile Safari, and the
+     header needs to actually stay put on scroll. html's overflow-x:hidden
+     above already prevents horizontal overflow at the document level. */
+  max-width: 100vw;
   min-height: 100%;
   display: flex;
   flex-direction: column;

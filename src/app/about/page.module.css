@@ -104,6 +104,12 @@
   font-family: var(--font-bricolage), sans-serif;
   font-size: 15px;
 }
+.facultyAvatarImage {
+  width: 48px !important;
+  height: 48px;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
 .facultyName {
   font-weight: 700;
   font-size: 14.5px;

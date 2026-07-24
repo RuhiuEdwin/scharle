@@ -100,6 +100,13 @@
   font-size: 18px;
   flex: none;
 }
+.avatarImage {
+  width: 56px !important;
+  height: 56px;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  flex: none;
+}
 .instructorName {
   font-weight: 700;
   font-size: 15px;
