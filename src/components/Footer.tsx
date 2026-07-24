@@ -12,6 +12,7 @@ const linkGroups = [
       { href: "/", label: "Home" },
       { href: "/about", label: "About" },
       { href: "/gallery", label: "Gallery" },
+      { href: "/blog", label: "The Glow Up" },
       { href: "/contact", label: "Contact" },
     ],
   },

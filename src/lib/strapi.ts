@@ -398,3 +398,66 @@ export type GalleryPage = { introHeading: string };
 export async function getGalleryPage(): Promise<GalleryPage> {
   return strapiFetch<GalleryPage>("gallery-page");
 }
+
+// ---------------------------------------------------------------------------
+// Blog
+
+export type BlogCategory =
+  | "Industry Trends"
+  | "School Life"
+  | "Tips & Tutorials"
+  | "Student Stories";
+
+export type BlogPost = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  body: string;
+  category: BlogCategory;
+  author: string;
+  seoDescription: string;
+  coverImage: string;
+  publishedAt: string;
+};
+
+type RawBlogPost = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  body: string;
+  category: BlogCategory;
+  author: string | null;
+  seoDescription: string | null;
+  coverImage: StrapiMedia | null;
+  publishedAt: string;
+};
+
+const BLOG_POST_POPULATE = "populate[coverImage]=true";
+
+function mapBlogPost(p: RawBlogPost): BlogPost {
+  return {
+    slug: p.slug,
+    title: p.title,
+    excerpt: p.excerpt,
+    body: p.body,
+    category: p.category,
+    author: p.author ?? "Scharle Beauty College",
+    seoDescription: p.seoDescription ?? p.excerpt,
+    coverImage: mediaUrl(p.coverImage),
+    publishedAt: p.publishedAt,
+  };
+}
+
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  const raw = await strapiFetch<RawBlogPost[]>(
+    `blog-posts?${BLOG_POST_POPULATE}&sort=publishedAt:desc&pagination[pageSize]=100`,
+  );
+  return raw.map(mapBlogPost);
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  const raw = await strapiFetch<RawBlogPost[]>(
+    `blog-posts?filters[slug][$eq]=${encodeURIComponent(slug)}&${BLOG_POST_POPULATE}`,
+  );
+  return raw[0] ? mapBlogPost(raw[0]) : null;
+}

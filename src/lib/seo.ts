@@ -11,16 +11,21 @@ export function pageMetadata({
   title,
   description,
   path,
+  type = "website",
+  image,
 }: {
   title: string;
   description: string;
   path: string;
+  type?: "website" | "article";
+  image?: string;
 }): Metadata {
   // Set as an absolute string rather than relying on the layout's title
   // template — Next.js doesn't apply a parent template to metadata defined
   // in the same route segment as the template itself, which would leave
   // the home page's <title> without the site name suffix.
   const ogTitle = `${title} | ${siteInfo.name}`;
+  const ogImage = image ?? "/opengraph-image";
 
   return {
     title: ogTitle,
@@ -31,14 +36,14 @@ export function pageMetadata({
       description,
       url: path,
       siteName: siteInfo.name,
-      type: "website",
-      images: ["/opengraph-image"],
+      type,
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description,
-      images: ["/opengraph-image"],
+      images: [ogImage],
     },
   };
 }

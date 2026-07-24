@@ -328,5 +328,6 @@ export const navLinks = [
   { href: "/courses", label: "Courses" },
   { href: "/admissions", label: "Admissions" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/blog", label: "The Glow Up" },
   { href: "/contact", label: "Contact" },
 ];
