@@ -31,7 +31,13 @@ export function useDragCarousel({
   const indexRef = useRef(0);
 
   function stepWidth() {
-    return carouselRef.current?.getBoundingClientRect().width ?? 0;
+    const track = trackRef.current;
+    const firstSlide = track?.firstElementChild as HTMLElement | null;
+    if (!track || !firstSlide) {
+      return carouselRef.current?.getBoundingClientRect().width ?? 0;
+    }
+    const gap = parseFloat(getComputedStyle(track).columnGap || "0") || 0;
+    return firstSlide.getBoundingClientRect().width + gap;
   }
 
   function goTo(rawIndex: number) {

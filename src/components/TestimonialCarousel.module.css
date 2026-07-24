@@ -15,8 +15,7 @@
 }
 .slide {
   flex: none;
-  width: 82%;
-  max-width: 380px;
+  width: 100%;
 }
 @media (min-width: 640px) {
   .slide {
