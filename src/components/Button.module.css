@@ -42,7 +42,10 @@
   color: var(--color-bright-white);
 }
 .primary::before {
-  background: var(--color-blackout);
+  /* Fixed dark fill, not var(--color-blackout) — that token flips to white
+     in dark theme (for the logo mark's high-contrast fill), which would
+     pair a white hover overlay with this button's fixed-white text. */
+  background: var(--color-ink);
 }
 .primary:hover::before {
   transform: scaleX(1);
@@ -60,7 +63,10 @@
   transform: scaleX(1);
 }
 .secondary:hover span {
-  color: var(--color-bright-white);
+  /* var(--bg), not a hardcoded white — the hover fill below is
+     var(--color-blackout), which is white in dark theme, so the text
+     needs to invert to match rather than staying fixed. */
+  color: var(--bg);
 }
 
 .text {
@@ -112,8 +118,11 @@
 }
 
 .success {
-  background: var(--color-blackout);
-  border-color: var(--color-blackout);
+  /* Fixed dark fill, not var(--color-blackout) — see the .primary::before
+     comment above; this pairs with the fixed-white text inherited from
+     .primary and must not flip to white in dark theme. */
+  background: var(--color-ink);
+  border-color: var(--color-ink);
 }
 .success::before {
   display: none;

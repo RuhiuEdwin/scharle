@@ -55,7 +55,10 @@
   cursor: pointer;
   z-index: 5;
   transition: transform 200ms var(--ease-snap), background 200ms ease;
-  color: var(--color-blackout);
+  /* Fixed dark icon, not var(--color-blackout) — the disc behind it is a
+     fixed near-white rgba() regardless of theme, so the icon must stay
+     fixed-dark too rather than flipping to white in dark theme. */
+  color: var(--color-ink);
 }
 .arrow.prev {
   left: 16px;

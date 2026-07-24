@@ -97,7 +97,9 @@
   height: 48px;
   border-radius: var(--r-pill);
   background: var(--color-blackout);
-  color: var(--color-bright-white);
+  /* var(--bg), not a hardcoded white — --color-blackout flips to white in
+     dark theme, so the initials need to invert with it to stay legible. */
+  color: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;

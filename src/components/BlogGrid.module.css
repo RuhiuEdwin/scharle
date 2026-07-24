@@ -20,7 +20,9 @@
 }
 .chip.active {
   background: var(--color-blackout);
-  color: var(--color-bright-white);
+  /* var(--bg), not a hardcoded white — --color-blackout flips to white in
+     dark theme, so the active label needs to invert with it to stay legible. */
+  color: var(--bg);
   border-color: var(--color-blackout);
 }
 

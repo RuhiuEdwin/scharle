@@ -4,7 +4,11 @@
   height: calc(100vh - 60px);
   min-height: 520px;
   overflow: hidden;
-  background: var(--color-blackout);
+  /* Fixed dark fallback, not var(--color-blackout) — this sits behind a
+     full-bleed photo with fixed-white text on top (via rgba() below), so
+     it must stay dark rather than flipping to white in dark theme while
+     the image is still loading. */
+  background: var(--color-ink);
   color: var(--color-bright-white);
 }
 
