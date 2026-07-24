@@ -5,7 +5,6 @@ import { HorizontalReveal } from "@/components/HorizontalReveal";
 import { CourseCarousel } from "@/components/CourseCarousel";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { ButtonLink } from "@/components/Button";
-import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { Reveal } from "@/components/Reveal";
 import { PatternField } from "@/components/Decorative";
 import {
@@ -92,7 +91,6 @@ export default async function Home() {
         </Reveal>
       </section>
 
-      <MobileCtaBar />
     </main>
   );
 }

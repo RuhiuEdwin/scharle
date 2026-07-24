@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { GalleryCarousel } from "@/components/GalleryCarousel";
 import { GalleryGrid } from "@/components/GalleryGrid";
-import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { PatternField } from "@/components/Decorative";
 import { getGalleryItems } from "@/lib/strapi";
 import { pageMetadata } from "@/lib/seo";
@@ -41,7 +40,6 @@ export default async function Gallery() {
         </Reveal>
       </section>
 
-      <MobileCtaBar />
     </main>
   );
 }

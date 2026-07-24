@@ -6,7 +6,6 @@ import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
 import { LayeredGrid } from "@/components/LayeredGrid";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
-import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { DecorativeCircle, PatternField, AccentRule } from "@/components/Decorative";
 import {
   getWhyScharleHighlights,
@@ -158,7 +157,6 @@ export default async function About() {
         </Reveal>
       </section>
 
-      <MobileCtaBar />
     </main>
   );
 }

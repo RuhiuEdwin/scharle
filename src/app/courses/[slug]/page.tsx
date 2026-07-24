@@ -7,7 +7,6 @@ import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import { CourseCarousel } from "@/components/CourseCarousel";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { ButtonLink } from "@/components/Button";
-import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { AccentRule, PatternField } from "@/components/Decorative";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
@@ -248,7 +247,6 @@ export default async function CourseDetail(
         </Reveal>
       </section>
 
-      <MobileCtaBar />
     </main>
   );
 }

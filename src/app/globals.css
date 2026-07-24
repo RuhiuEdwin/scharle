@@ -17,6 +17,8 @@
   --line: rgba(0, 0, 0, 0.12);
   --line-strong: rgba(0, 0, 0, 0.35);
 
+  color-scheme: light;
+
   /* Spacing — 4px base grid */
   --sp-1: 4px;
   --sp-2: 8px;
@@ -39,6 +41,27 @@
   --max-content: 1280px;
 }
 
+/* Dark theme — toggled via [data-theme="dark"] on <html>, set before
+   hydration by the inline script in layout.tsx (reads localStorage, falls
+   back to system preference, and always resolves to an explicit "light"
+   or "dark" attribute — so this rule is the only one that needs to exist,
+   no separate system-preference media query). Only the semantic layer is
+   overridden (--bg/--text/etc, plus --color-blackout, which several
+   components treat as "the high-contrast fill color" rather than literally
+   black) — every component already consumes these vars rather than
+   hardcoded colors, so this is the only place dark mode needs defining. */
+:root[data-theme="dark"] {
+  --color-blackout: #ffffff;
+  --bg: #141312;
+  --bg-alt: #201f1c;
+  --text: #f5f3ef;
+  --text-mute: #9a948c;
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: rgba(255, 255, 255, 0.38);
+
+  color-scheme: dark;
+}
+
 html {
   height: 100%;
 }
@@ -58,6 +81,7 @@ body {
   font-family: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 220ms ease, color 220ms ease;
 }
 
 * {

@@ -1,0 +1,42 @@
+.toggle {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line-strong);
+  background: none;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: none;
+  transition: border-color 180ms ease, transform 180ms var(--ease-snap);
+}
+.toggle:hover {
+  border-color: var(--color-signal-red);
+  color: var(--color-signal-red);
+}
+
+.sun,
+.moon {
+  position: absolute;
+  transition: opacity 220ms ease, transform 320ms var(--ease-snap);
+}
+.sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+.moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+:global([data-theme="dark"]) .sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+}
+:global([data-theme="dark"]) .moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}

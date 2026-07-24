@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { CourseCarousel } from "@/components/CourseCarousel";
 import { CourseAccordion } from "@/components/CourseAccordion";
-import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { PatternField } from "@/components/Decorative";
 import { getCourses } from "@/lib/strapi";
 import { pageMetadata } from "@/lib/seo";
@@ -44,7 +43,6 @@ export default async function Courses() {
         </Reveal>
       </section>
 
-      <MobileCtaBar />
     </main>
   );
 }

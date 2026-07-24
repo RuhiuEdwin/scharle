@@ -7,7 +7,11 @@
   position: sticky;
   top: 0;
   background: var(--bg);
-  z-index: 50;
+  /* Must outrank every other stacking context on the page (carousel arrows
+     etc. sit at z-index 50) — the mobile menu overlay is a descendant of
+     this element, so it can only ever beat page content if its ancestor's
+     stacking context does. */
+  z-index: 100;
   transition: padding 260ms var(--ease-snap), box-shadow 260ms ease;
 }
 
@@ -33,6 +37,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+  z-index: 2;
 }
 
 .circle {
@@ -133,6 +139,8 @@
   border: none;
   background: none;
   padding: 4px;
+  position: relative;
+  z-index: 2;
 }
 .burger span {
   height: 2px;
@@ -156,6 +164,8 @@
   }
   .ctaSlot {
     display: flex;
+    align-items: center;
+    gap: var(--sp-4);
   }
   .burger {
     display: none;
@@ -165,32 +175,43 @@
 .mobileMenu {
   position: fixed;
   inset: 0;
-  top: 60px;
   background: var(--bg);
-  z-index: 40;
-  padding: var(--sp-5) var(--sp-4);
+  z-index: 1;
+  padding: 88px var(--sp-5) var(--sp-6);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-6);
+  justify-content: center;
+  gap: var(--sp-7);
+  /* clip-path is driven entirely from Header.tsx (GSAP) — no CSS default,
+     so the JS-set inline value is always the source of truth. */
 }
 .mobileMenu ul {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-5);
+  gap: var(--sp-4);
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.mobileMenu a {
+.mobileMenu ul a {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
   font-family: var(--font-bricolage), sans-serif;
-  font-size: 22px;
+  font-size: 34px;
   text-transform: uppercase;
+  line-height: 1.1;
+  will-change: transform;
 }
-.mobileMenu a[aria-current="page"] {
+.mobileMenu ul a[aria-current="page"] {
   color: var(--color-signal-red);
 }
-.mobileMenu li {
-  overflow: hidden;
+.mobileLinkIndex {
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-signal-red);
+  letter-spacing: 0.04em;
 }
 .mobileCtas {
   display: flex;
@@ -198,4 +219,8 @@
 }
 .mobileCtas > * {
   flex: 1;
+}
+.mobileThemeToggle {
+  align-self: center;
+  margin-top: var(--sp-2);
 }

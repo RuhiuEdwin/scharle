@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import styles from "./CourseAccordion.module.css";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
 import { ButtonLink } from "@/components/Button";
+import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import type { Course } from "@/lib/strapi";
 
 const EASE_SNAP = [0.16, 1.35, 0.34, 1] as const;
@@ -15,11 +16,11 @@ export function CourseAccordion({ courses }: { courses: Course[] }) {
   );
 
   return (
-    <div>
+    <StaggerReveal>
       {courses.map((course) => {
         const open = openSlug === course.slug;
         return (
-          <div className={styles.item} key={course.slug}>
+          <StaggerItem className={styles.item} key={course.slug}>
             <button
               className={styles.head}
               aria-expanded={open}
@@ -70,9 +71,9 @@ export function CourseAccordion({ courses }: { courses: Course[] }) {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </StaggerItem>
         );
       })}
-    </div>
+    </StaggerReveal>
   );
 }

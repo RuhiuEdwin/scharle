@@ -70,8 +70,22 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${bricolage.variable} ${jakarta.variable}`}>
+    <html
+      lang="en"
+      className={`${bricolage.variable} ${jakarta.variable}`}
+      suppressHydrationWarning
+    >
       <body>
+        {/* Sets data-theme before hydration so there's no flash of the wrong
+            theme: an explicit saved choice wins, otherwise system
+            preference — always resolves to a concrete "light"/"dark"
+            attribute so globals.css never has to handle an "unset" case. */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();`,
+          }}
+        />
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

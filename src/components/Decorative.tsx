@@ -67,7 +67,12 @@ export function PatternField({
   /** Full-bleed hero/divider treatment (lower opacity, larger tile) instead of a small corner accent. */
   full?: boolean;
 }) {
-  const ref = useScrollDrift<HTMLDivElement>({ y: 50, opacity: 0.2 });
+  // Parallax drift only — no opacity target here. This used to inherit the
+  // old dot-grid's `opacity: 0.2` scrub target, which is 2-4x the pattern's
+  // actual CSS opacity (0.09 / 0.045) and made it scrub steadily *more*
+  // visible while scrolling through a section, overriding the deliberately
+  // subtle static value.
+  const ref = useScrollDrift<HTMLDivElement>({ y: 50 });
   return (
     <div
       ref={ref}

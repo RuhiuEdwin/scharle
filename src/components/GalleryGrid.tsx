@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "./Gallery.module.css";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
+import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import type { GalleryItem } from "@/lib/strapi";
 
 const CATEGORIES = ["All", "Studio", "Students"] as const;
@@ -44,18 +45,19 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      <div className={styles.grid}>
+      <StaggerReveal className={styles.grid}>
         {filtered.map((item, i) => (
-          <button
-            key={item.caption}
-            className={styles.tile}
-            onClick={() => setOpenIndex(i)}
-            aria-label={`Open ${item.caption} in lightbox`}
-          >
-            <ImgPlaceholder caption={item.caption} src={item.image} />
-          </button>
+          <StaggerItem className={styles.tile} key={item.caption}>
+            <button
+              className={styles.tileButton}
+              onClick={() => setOpenIndex(i)}
+              aria-label={`Open ${item.caption} in lightbox`}
+            >
+              <ImgPlaceholder caption={item.caption} src={item.image} />
+            </button>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerReveal>
 
       {mounted && createPortal(
         <AnimatePresence>
