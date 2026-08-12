@@ -3,8 +3,8 @@ import styles from "./page.module.css";
 import { Reveal } from "@/components/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import { BookingForm } from "@/components/BookingForm";
-import { AdmissionsChecklistItem } from "@/components/AdmissionsChecklist";
-import { DecorativeCircle, PatternField, AccentRule } from "@/components/Decorative";
+import { EnrollmentForm } from "@/components/EnrollmentForm";
+import { PatternField, AccentRule } from "@/components/Decorative";
 import { ButtonLink } from "@/components/Button";
 import { getAdmissionsPage, getPaymentInfo, getCourses, getSiteInfo } from "@/lib/strapi";
 import { pageMetadata } from "@/lib/seo";
@@ -41,10 +41,6 @@ export default async function Admissions(
   return (
     <main>
       <section className={styles.section}>
-        <DecorativeCircle
-          style={{ width: 180, height: 180, top: -60, right: -60 }}
-          drift={{ y: 40, rotate: -15 }}
-        />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>How to Join</span>
           <h1 className="h-display" style={{ fontSize: 30 }}>
@@ -70,14 +66,15 @@ export default async function Admissions(
             Requirements Checklist
           </span>
           <p className="body-text" style={{ fontSize: 13, marginBottom: 8 }}>
-            Tap each item as you gather it.
+            Tick items off as you gather them, or attach a file straight
+            away — not everything needs a file, so attach what you have.
           </p>
           <AccentRule className={styles.rule} />
-          <StaggerReveal className={styles.checklist}>
-            {admissionsRequirements.map((req) => (
-              <AdmissionsChecklistItem label={req} key={req} />
-            ))}
-          </StaggerReveal>
+          <EnrollmentForm
+            requirements={admissionsRequirements}
+            courses={courses}
+            defaultCourseSlug={defaultCourseSlug}
+          />
         </Reveal>
         <Reveal delay={0.1}>
           <span className={`label ${styles.eyebrow}`}>Intakes</span>

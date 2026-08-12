@@ -64,12 +64,12 @@
   margin: 0 0 var(--sp-4);
 }
 .prose :global(h2) {
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 24px;
   margin: var(--sp-6) 0 var(--sp-3);
 }
 .prose :global(h3) {
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 19px;
   margin: var(--sp-5) 0 var(--sp-2);
 }
@@ -128,7 +128,7 @@
   color: var(--color-signal-red);
 }
 .moreTitle {
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 15.5px;
   line-height: 1.25;
 }

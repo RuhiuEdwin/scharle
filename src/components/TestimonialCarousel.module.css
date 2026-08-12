@@ -33,7 +33,7 @@
   gap: 18px;
 }
 .mark {
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 52px;
   color: var(--color-signal-red);
   line-height: 1;

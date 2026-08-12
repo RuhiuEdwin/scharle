@@ -58,7 +58,7 @@
   line-height: 1;
 }
 .primary {
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 16px;
 }
 .secondary {

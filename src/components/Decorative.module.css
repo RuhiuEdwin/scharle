@@ -15,24 +15,26 @@
      (see design/BRAND-GUIDELINE-RECONCILIATION.md §3) as a tileable SVG —
      replaces the earlier generic dot-grid texture. Stroke color is baked in
      (data URIs can't read CSS custom properties); --color-ink's hex is used
-     directly since every current placement sits on a light background. */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0,16 L16,16 L16,0 M32,0 L32,16 L48,16 M48,32 L32,32 L32,48 M16,48 L16,32 L0,32' fill='none' stroke='%23171512' stroke-width='2.5' stroke-linecap='square'/%3E%3C/svg%3E");
-  background-size: 64px 64px;
-  opacity: 0.09;
+     directly since every current placement sits on a light background.
+     Kept deliberately faint (thin stroke, low opacity, wide tiling) — this
+     is meant to read as background texture/depth, not a visible grid. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0,16 L16,16 L16,0 M32,0 L32,16 L48,16 M48,32 L32,32 L32,48 M16,48 L16,32 L0,32' fill='none' stroke='%23171512' stroke-width='1.25' stroke-linecap='square'/%3E%3C/svg%3E");
+  background-size: 88px 88px;
+  opacity: 0.02;
   will-change: transform, opacity;
 }
 
 .patternFull {
   composes: pattern;
-  opacity: 0.045;
-  background-size: 96px 96px;
+  opacity: 0.012;
+  background-size: 130px 130px;
 }
 
 /* Dark theme: the stroke color is baked into the data URI above, so it
    can't follow --color-ink automatically — swap to a light stroke, or the
    whole motif just disappears against a dark background. */
 :global([data-theme="dark"]) .pattern {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0,16 L16,16 L16,0 M32,0 L32,16 L48,16 M48,32 L32,32 L32,48 M16,48 L16,32 L0,32' fill='none' stroke='%23f5f3ef' stroke-width='2.5' stroke-linecap='square'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M0,16 L16,16 L16,0 M32,0 L32,16 L48,16 M48,32 L32,32 L32,48 M16,48 L16,32 L0,32' fill='none' stroke='%23f5f3ef' stroke-width='1.25' stroke-linecap='square'/%3E%3C/svg%3E");
 }
 
 .rule {

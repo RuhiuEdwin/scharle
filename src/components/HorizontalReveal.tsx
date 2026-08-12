@@ -64,7 +64,7 @@ export function HorizontalReveal({
           <h2 className="h-display">{title}</h2>
         </div>
         <div className={styles.track} ref={trackRef}>
-          {items.map((item, i) => (
+          {items.map((item) => (
             <div className={styles.panel} key={item.title}>
               <div className={styles.panelImage}>
                 <Image
@@ -76,9 +76,6 @@ export function HorizontalReveal({
                 />
               </div>
               <div className={styles.panelText}>
-                <span className={styles.panelNum}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
                 <h3 className={styles.panelTitle}>{item.title}</h3>
                 <p className={styles.panelBody}>{item.body}</p>
               </div>

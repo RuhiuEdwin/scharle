@@ -65,7 +65,7 @@
   display: block;
 }
 .headline {
-  font-size: clamp(38px, 9vw, 80px);
+  font-size: clamp(38px, 10vw, 108px);
   color: var(--color-bright-white);
 }
 .sub {

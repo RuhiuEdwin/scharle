@@ -26,49 +26,10 @@
   border-color: var(--color-blackout);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--sp-5);
-  margin-top: var(--sp-5);
-}
-@media (min-width: 640px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 1000px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  height: 100%;
-  transition: border-color 200ms ease, transform 200ms ease;
-}
-.card:hover,
-.card:focus-visible {
-  border-color: var(--color-signal-red);
-  transform: translateY(-3px);
-}
-
-.cover {
-  height: 190px;
-}
-
-.body {
-  padding: var(--sp-4);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
+/* Meta row shared by the feature and each list row: category · date,
+   rendered as plain text rather than another pill — the chips above are
+   already the site's "pill" language, so the per-post meta reads as
+   quieter, editorial byline text instead of repeating that shape. */
 .category {
   font-size: 11px;
   font-weight: 700;
@@ -76,26 +37,196 @@
   letter-spacing: 0.06em;
   color: var(--color-signal-red);
 }
-
-.title {
-  font-family: var(--font-bricolage), sans-serif;
-  font-size: 19px;
-  line-height: 1.15;
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--text-mute);
 }
-
-.excerpt {
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--text-mute);
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
 .date {
   font-size: 11.5px;
   color: var(--text-mute);
+}
+
+/* ------------------------------------------------------------------ */
+/* Featured lead post — large two-column editorial treatment, no card
+   border/box. This is the "wow" beat at the top of the page; everything
+   below settles into a quieter list rhythm. */
+
+.feature {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-5);
+  margin-top: var(--sp-6);
+  padding-bottom: var(--sp-6);
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+}
+@media (min-width: 860px) {
+  .feature {
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: var(--sp-7);
+  }
+}
+
+.featureImage {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.featureImageInner {
+  height: 100%;
+}
+.featureImageInner :global(img) {
+  transition: transform 500ms var(--ease-snap);
+}
+.feature:hover .featureImageInner :global(img) {
+  transform: scale(1.04);
+}
+
+.featureBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.featureMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.featureTitle {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(26px, 3.4vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+.featureExcerpt {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-mute);
+  max-width: 46ch;
+}
+.featureRead {
   margin-top: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-signal-red);
+  background-image: linear-gradient(var(--color-signal-red), var(--color-signal-red));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  padding-bottom: 3px;
+  width: fit-content;
+  transition: background-size 260ms var(--ease-snap);
+}
+.feature:hover .featureRead {
+  background-size: 100% 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Everything after the feature — a plain divided list rather than
+   another card grid, so it reads as "more to read" rather than
+   repeating the feature's own visual weight. */
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+}
+
+.rowThumb {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  flex: none;
+  overflow: hidden;
+}
+@media (min-width: 620px) {
+  .rowThumb {
+    width: 116px;
+    height: 116px;
+  }
+}
+.rowThumbInner {
+  height: 100%;
+}
+.rowThumbInner :global(img) {
+  transition: transform 400ms var(--ease-snap);
+}
+.row:hover .rowThumbInner :global(img) {
+  transform: scale(1.06);
+}
+
+.rowBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.rowMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rowTitle {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.25;
+  transition: color 180ms ease;
+}
+@media (min-width: 620px) {
+  .rowTitle {
+    font-size: 19px;
+  }
+}
+.row:hover .rowTitle {
+  color: var(--color-signal-red);
+}
+.rowExcerpt {
+  display: none;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-mute);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (min-width: 620px) {
+  .rowExcerpt {
+    display: block;
+  }
+}
+
+.rowArrow {
+  flex: none;
+  align-self: center;
+  font-size: 16px;
+  color: var(--color-signal-red);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 220ms ease, transform 220ms var(--ease-snap);
+  display: none;
+}
+@media (min-width: 760px) {
+  .rowArrow {
+    display: block;
+  }
+}
+.row:hover .rowArrow {
+  opacity: 1;
+  transform: translateX(0);
 }

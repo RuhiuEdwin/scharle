@@ -40,7 +40,11 @@ export default async function Home() {
         eyebrow={home.heroEyebrow}
         headline={
           <>
-            Learn it. Live it. <span className="stamp-word">Glow</span> it.
+            Learn it.
+            <br />
+            Live it.
+            <br />
+            <span className="stamp-word">Glow</span> it.
           </>
         }
         subcopy={home.heroSubcopy}

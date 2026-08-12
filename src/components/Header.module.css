@@ -81,7 +81,7 @@
   line-height: 1;
 }
 .primary {
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 18px;
   letter-spacing: -0.01em;
 }
@@ -197,7 +197,7 @@
   display: flex;
   align-items: baseline;
   gap: 14px;
-  font-family: var(--font-bricolage), sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 34px;
   text-transform: uppercase;
   line-height: 1.1;
@@ -205,13 +205,6 @@
 }
 .mobileMenu ul a[aria-current="page"] {
   color: var(--color-signal-red);
-}
-.mobileLinkIndex {
-  font-family: var(--font-jakarta), sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-signal-red);
-  letter-spacing: 0.04em;
 }
 .mobileCtas {
   display: flex;

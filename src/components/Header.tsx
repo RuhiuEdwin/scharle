@@ -222,7 +222,6 @@ export function Header() {
                     attachMagnetic(el);
                   }}
                 >
-                  <span className={styles.mobileLinkIndex}>{String(i + 1).padStart(2, "0")}</span>
                   {link.label}
                 </Link>
               </li>

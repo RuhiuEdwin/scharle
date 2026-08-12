@@ -147,7 +147,6 @@ export function CourseCarousel({
             />
           </div>
           <div className={styles.scrim} />
-          <div className={styles.deco} aria-hidden="true" />
           <div className={styles.content}>
             <span className={styles.index}>
               {String(i + 1).padStart(2, "0")} / {String(courses.length).padStart(2, "0")}

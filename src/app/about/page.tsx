@@ -6,7 +6,7 @@ import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
 import { LayeredGrid } from "@/components/LayeredGrid";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
-import { DecorativeCircle, PatternField, AccentRule } from "@/components/Decorative";
+import { PatternField, AccentRule } from "@/components/Decorative";
 import {
   getWhyScharleHighlights,
   getStudentLifeHighlights,
@@ -97,10 +97,6 @@ export default async function About() {
       </section>
 
       <section className={`${styles.section} ${styles.alt}`}>
-        <DecorativeCircle
-          style={{ width: 240, height: 240, top: -80, left: -80 }}
-          drift={{ y: 60, rotate: -20 }}
-        />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>The People</span>
           <h2 className="h-display" style={{ fontSize: 26 }}>

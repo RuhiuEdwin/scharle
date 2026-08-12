@@ -215,14 +215,3 @@
   transition: width 500ms var(--ease-snap);
 }
 
-.deco {
-  position: absolute;
-  top: -100px;
-  right: -80px;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: var(--color-signal-red);
-  opacity: 0.9;
-  z-index: 2;
-}

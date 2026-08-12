@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import styles from "./page.module.css";
 import { Reveal } from "@/components/Reveal";
 import { ContactForm } from "@/components/ContactForm";
-import { PatternField, DecorativeCircle, AccentRule } from "@/components/Decorative";
+import { PatternField, AccentRule } from "@/components/Decorative";
 import { SocialIcon } from "@/components/SocialIcon";
 import { ButtonLink } from "@/components/Button";
 import { getSiteInfo, getContactPage } from "@/lib/strapi";
@@ -65,10 +65,6 @@ export default async function Contact() {
       </section>
 
       <section className={`${styles.section} ${styles.alt}`}>
-        <DecorativeCircle
-          style={{ width: 220, height: 220, bottom: -80, left: -80 }}
-          drift={{ y: -60, rotate: 20 }}
-        />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Find Us</span>
           <h2 className="h-display" style={{ fontSize: 24 }}>
