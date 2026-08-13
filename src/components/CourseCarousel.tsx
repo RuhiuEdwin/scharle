@@ -8,6 +8,7 @@ import { ButtonLink } from "@/components/Button";
 import type { Course } from "@/lib/strapi";
 
 const EASE_SNAP = "expo.out";
+const AUTOPLAY_MS = 6000;
 
 export function CourseCarousel({
   courses,
@@ -20,12 +21,14 @@ export function CourseCarousel({
   detailMode?: boolean;
 }) {
   const [index, setIndex] = useState(0);
+  const indexRef = useRef(0);
   const stageRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mediaRefs = useRef<(HTMLDivElement | null)[]>([]);
   const animating = useRef(false);
   const touchStartX = useRef<number | null>(null);
   const reduced = useRef(false);
+  const autoplayTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     reduced.current = window.matchMedia(
@@ -45,11 +48,11 @@ export function CourseCarousel({
   }
 
   function goTo(nextIndexRaw: number) {
-    if (animating.current || nextIndexRaw === index) return;
     const nextIndex = (nextIndexRaw + courses.length) % courses.length;
+    if (animating.current || nextIndex === indexRef.current) return;
     animating.current = true;
 
-    const current = slideRefs.current[index];
+    const current = slideRefs.current[indexRef.current];
     const next = slideRefs.current[nextIndex];
     const nextMedia = mediaRefs.current[nextIndex];
     if (!current || !next) {
@@ -88,18 +91,38 @@ export function CourseCarousel({
       );
     }
 
+    indexRef.current = nextIndex;
     setIndex(nextIndex);
     kenBurns(nextIndex);
   }
 
+  function resumeAutoplay() {
+    if (autoplayTimer.current) clearInterval(autoplayTimer.current);
+    if (courses.length < 2) return;
+    autoplayTimer.current = setInterval(
+      () => goTo(indexRef.current + 1),
+      AUTOPLAY_MS,
+    );
+  }
+
   useEffect(() => {
     kenBurns(0);
+    resumeAutoplay();
+    return () => {
+      if (autoplayTimer.current) clearInterval(autoplayTimer.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function onManualGoTo(next: number) {
+    goTo(next);
+    resumeAutoplay();
+  }
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.key === "ArrowRight") goTo(index + 1);
-      if (e.key === "ArrowLeft") goTo(index - 1);
+      if (e.key === "ArrowRight") onManualGoTo(index + 1);
+      if (e.key === "ArrowLeft") onManualGoTo(index - 1);
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -112,7 +135,7 @@ export function CourseCarousel({
   function onTouchEnd(e: React.TouchEvent) {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 50) goTo(index + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 50) onManualGoTo(index + (dx < 0 ? 1 : -1));
     touchStartX.current = null;
   }
 
@@ -185,14 +208,14 @@ export function CourseCarousel({
           <button
             className={`${styles.arrow} ${styles.prev}`}
             aria-label="Previous course"
-            onClick={() => goTo(index - 1)}
+            onClick={() => onManualGoTo(index - 1)}
           >
             ‹
           </button>
           <button
             className={`${styles.arrow} ${styles.next}`}
             aria-label="Next course"
-            onClick={() => goTo(index + 1)}
+            onClick={() => onManualGoTo(index + 1)}
           >
             ›
           </button>
@@ -202,7 +225,7 @@ export function CourseCarousel({
               <button
                 key={course.slug}
                 className={`${styles.railItem} ${i === index ? styles.current : ""}`}
-                onClick={() => goTo(i)}
+                onClick={() => onManualGoTo(i)}
               >
                 <span className={styles.railLabel}>{course.name}</span>
                 <span className={styles.railDash} />

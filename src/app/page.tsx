@@ -48,6 +48,10 @@ export default async function Home() {
           </>
         }
         subcopy={home.heroSubcopy}
+        highlights={whyScharleHighlights.slice(0, 3).map((h) => ({
+          title: h.title,
+          body: h.body,
+        }))}
         slides={[
           { image: home.heroImages[0], alt: "Scharle students" },
           ...(hairdressing ? [{ image: hairdressing.image, alt: "Hairdressing in progress" }] : []),

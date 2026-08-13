@@ -17,8 +17,15 @@
   color: var(--text-mute);
   background: none;
   cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease;
 }
-.chip.active {
+.chip:hover,
+.chip:focus-visible {
+  border-color: var(--color-signal-red);
+  color: var(--color-signal-red);
+}
+.chip.active,
+.chip.active:hover {
   background: var(--color-blackout);
   /* var(--bg), not a hardcoded white — --color-blackout flips to white in
      dark theme, so the active label needs to invert with it to stay legible. */

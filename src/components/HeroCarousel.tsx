@@ -16,6 +16,11 @@ export type HeroSlide = {
   alt: string;
 };
 
+export type HeroHighlight = {
+  title: string;
+  body: string;
+};
+
 const AUTOPLAY_MS = 5500;
 const EASE_SNAP = "expo.out";
 
@@ -24,15 +29,18 @@ export function HeroCarousel({
   eyebrow,
   headline,
   subcopy,
+  highlights,
   children,
 }: {
   slides: HeroSlide[];
   eyebrow: string;
   headline: ReactNode;
   subcopy: string;
+  highlights: HeroHighlight[];
   children: ReactNode;
 }) {
   const [index, setIndex] = useState(0);
+  const indexRef = useRef(0);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mediaRefs = useRef<(HTMLDivElement | null)[]>([]);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -43,10 +51,10 @@ export function HeroCarousel({
   function goTo(rawIndex: number) {
     if (animating.current) return;
     const next = (rawIndex + slides.length) % slides.length;
-    if (next === index) return;
+    if (next === indexRef.current) return;
     animating.current = true;
 
-    const current = slideRefs.current[index];
+    const current = slideRefs.current[indexRef.current];
     const nextEl = slideRefs.current[next];
     const nextMedia = mediaRefs.current[next];
     if (!current || !nextEl) {
@@ -73,12 +81,16 @@ export function HeroCarousel({
         animating.current = false;
       });
     }
+    indexRef.current = next;
     setIndex(next);
   }
 
   function resumeAutoplay() {
     if (autoplayTimer.current) clearInterval(autoplayTimer.current);
-    autoplayTimer.current = setInterval(() => goTo(index + 1), AUTOPLAY_MS);
+    autoplayTimer.current = setInterval(
+      () => goTo(indexRef.current + 1),
+      AUTOPLAY_MS,
+    );
   }
 
   useEffect(() => {
@@ -151,6 +163,18 @@ export function HeroCarousel({
         <p className={styles.sub}>{subcopy}</p>
         <div className={styles.ctas}>{children}</div>
       </div>
+
+      {highlights.length > 0 && (
+        <div className={styles.highlights}>
+          {highlights.map((h) => (
+            <div className={styles.highlightItem} key={h.title}>
+              <span className={styles.highlightMark} aria-hidden="true" />
+              <span className={styles.highlightTitle}>{h.title}</span>
+              <span className={styles.highlightBody}>{h.body}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       <button
         className={`${styles.arrow} ${styles.prev}`}

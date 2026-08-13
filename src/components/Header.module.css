@@ -1,36 +1,49 @@
+/* Floating island: fixed and centered with margin on every side (never
+   flush against the top or the left/right edges), so it reads as a
+   detached bar sitting on top of the page rather than a docked bar
+   attached to the viewport frame. */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--sp-4);
   padding: var(--sp-3) var(--sp-4);
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 1160px;
   background: var(--bg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
   /* Must outrank every other stacking context on the page (carousel arrows
      etc. sit at z-index 50) — the mobile menu overlay is a descendant of
      this element, so it can only ever beat page content if its ancestor's
      stacking context does. */
   z-index: 100;
-  transition: padding 260ms var(--ease-snap), box-shadow 260ms ease;
+  transition: padding 260ms var(--ease-snap), box-shadow 260ms ease, top 260ms var(--ease-snap);
 }
 
 @media (min-width: 760px) {
   .header {
-    padding: var(--sp-4) var(--sp-5);
+    padding: var(--sp-3) var(--sp-5);
+    top: 18px;
   }
 }
 
 @media (min-width: 900px) {
   .header {
-    padding: var(--sp-4) var(--sp-8);
+    padding: var(--sp-3) var(--sp-6);
   }
 }
 
 .header.shrunk {
-  padding-top: var(--sp-2);
-  padding-bottom: var(--sp-2);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  top: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
 }
 
 .mark {

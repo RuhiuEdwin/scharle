@@ -7,8 +7,9 @@ import { StaggerItem } from "@/components/StaggerReveal";
 
 export function AdmissionsChecklistItem({ label }: { label: string }) {
   const [checked, setChecked] = useState(false);
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const boxRef = useRef<HTMLSpanElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
 
   function pop() {
@@ -23,23 +24,37 @@ export function AdmissionsChecklistItem({ label }: { label: string }) {
   }
 
   function toggleManual() {
-    // A file already satisfies this item — clear it to un-tick instead of
+    // Files already satisfy this item — clear them to un-tick instead of
     // fighting the file input's own state.
-    if (fileName) return;
+    if (files.length > 0) return;
     setChecked((v) => !v);
     pop();
   }
 
+  // A native multi-select replaces the whole FileList each time, so a
+  // second picker trip would wipe out the first — sync the input's own
+  // files back from our accumulated state after every change instead.
+  function syncInput(next: File[]) {
+    const dt = new DataTransfer();
+    next.forEach((f) => dt.items.add(f));
+    if (inputRef.current) inputRef.current.files = dt.files;
+  }
+
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0] ?? null;
-    setFileName(file?.name ?? null);
-    setChecked(Boolean(file));
+    const picked = Array.from(e.target.files ?? []);
+    if (picked.length === 0) return;
+    const next = [...files, ...picked];
+    setFiles(next);
+    setChecked(true);
+    syncInput(next);
     pop();
   }
 
-  function clearFile() {
-    setFileName(null);
-    setChecked(false);
+  function removeFile(name: string) {
+    const next = files.filter((f) => f.name !== name);
+    setFiles(next);
+    syncInput(next);
+    if (next.length === 0) setChecked(false);
   }
 
   return (
@@ -63,33 +78,35 @@ export function AdmissionsChecklistItem({ label }: { label: string }) {
           <span className={styles.label}>{label}</span>
         </button>
 
-        <label className={styles.attach} htmlFor={inputId}>
-          {fileName ? (
-            <span className={styles.fileChip}>
-              {fileName}
+        <div className={styles.attachGroup}>
+          {files.map((f) => (
+            <span className={styles.fileChip} key={f.name}>
+              {f.name}
               <button
                 type="button"
                 className={styles.remove}
-                aria-label={`Remove ${fileName}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  clearFile();
-                }}
+                aria-label={`Remove ${f.name}`}
+                onClick={() => removeFile(f.name)}
               >
                 ×
               </button>
             </span>
-          ) : (
-            <span className={styles.attachText}>Attach</span>
-          )}
-          <input
-            id={inputId}
-            type="file"
-            name="documents"
-            accept="image/*,.pdf,.doc,.docx"
-            onChange={handleFile}
-          />
-        </label>
+          ))}
+          <label className={styles.attach} htmlFor={inputId}>
+            <span className={styles.attachText}>
+              {files.length > 0 ? "+ Add" : "Attach"}
+            </span>
+            <input
+              ref={inputRef}
+              id={inputId}
+              type="file"
+              name="documents"
+              multiple
+              accept="image/*,.pdf,.doc,.docx"
+              onChange={handleFile}
+            />
+          </label>
+        </div>
       </div>
     </StaggerItem>
   );
