@@ -134,36 +134,37 @@
   max-width: 28ch;
 }
 
+/* Hidden below 760px — at narrow widths this sits at the vertical center
+   of the whole (tall) hero, which lands squarely on top of the CTA
+   buttons rather than clear of them. Autoplay plus the dots (repositioned
+   below the floating header) carry navigation on mobile instead. */
 .arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 50;
-  width: 48px;
-  height: 48px;
-  border-radius: 999px;
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
-  background: rgba(0, 0, 0, 0.3);
-  color: var(--color-bright-white);
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 200ms ease, transform 200ms var(--ease-snap), border-color 200ms ease;
-}
-.arrow:hover {
-  background: var(--color-signal-red);
-  border-color: var(--color-signal-red);
-  transform: translateY(-50%) scale(1.08);
-}
-.arrow.prev {
-  left: 16px;
-}
-.arrow.next {
-  right: 16px;
+  display: none;
 }
 @media (min-width: 760px) {
+  .arrow {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--color-bright-white);
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 200ms ease, transform 200ms var(--ease-snap), border-color 200ms ease;
+  }
+  .arrow:hover {
+    background: var(--color-signal-red);
+    border-color: var(--color-signal-red);
+    transform: translateY(-50%) scale(1.08);
+  }
   .arrow.prev {
     left: 24px;
   }
@@ -172,13 +173,23 @@
   }
 }
 
+/* top clears the floating header (which sits at ~14-18px + its own
+   height) — the hero bleeds to the true viewport top now, so anything
+   placed near the top of the hero itself needs to duck under the header
+   rather than assume it has that space to itself. */
 .dots {
   position: absolute;
-  right: 24px;
-  top: 24px;
+  right: 20px;
+  top: 92px;
   z-index: 50;
   display: flex;
   gap: 8px;
+}
+@media (min-width: 760px) {
+  .dots {
+    right: 24px;
+    top: 100px;
+  }
 }
 .dots button {
   width: 24px;

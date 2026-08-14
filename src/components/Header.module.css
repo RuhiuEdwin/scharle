@@ -10,11 +10,16 @@
   padding: var(--sp-3) var(--sp-4);
   border: 1px solid var(--line);
   border-radius: var(--r-pill);
+  /* Centered via left/right + margin auto, deliberately not
+     transform: translateX(-50%) — a transform on this element would
+     create a new containing block for any position: fixed descendant
+     (the mobile menu overlay is one), trapping that full-screen overlay
+     inside the header's own small pill instead of the real viewport. */
   position: fixed;
   top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 28px);
+  left: 14px;
+  right: 14px;
+  margin: 0 auto;
   max-width: 1160px;
   background: var(--bg);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
@@ -171,7 +176,11 @@
   transform: translateY(-6px) rotate(-45deg);
 }
 
-@media (min-width: 760px) {
+/* Wider than the header's own padding/top breakpoints above — 7 nav
+   links (including the 3-word "The Glow Up") plus the CTA and theme
+   toggle don't fit inline until there's real room; below this, the
+   floating pill stays in hamburger mode rather than wrapping/clipping. */
+@media (min-width: 1080px) {
   .navLinks {
     display: flex;
   }
