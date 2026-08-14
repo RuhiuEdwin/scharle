@@ -33,15 +33,6 @@
   }
 }
 
-.whoImage {
-  height: 240px;
-}
-
-.headline {
-  font-size: 28px;
-  margin-top: var(--sp-2);
-}
-
 .subHeadline {
   font-size: 22px;
 }
@@ -69,7 +60,7 @@
 .facultyGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--sp-4);
+  gap: var(--sp-5);
   margin-top: var(--sp-5);
 }
 @media (min-width: 620px) {

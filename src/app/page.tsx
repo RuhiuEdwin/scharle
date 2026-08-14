@@ -48,10 +48,6 @@ export default async function Home() {
           </>
         }
         subcopy={home.heroSubcopy}
-        highlights={whyScharleHighlights.slice(0, 3).map((h) => ({
-          title: h.title,
-          body: h.body,
-        }))}
         slides={[
           { image: home.heroImages[0], alt: "Scharle students" },
           ...(hairdressing ? [{ image: hairdressing.image, alt: "Hairdressing in progress" }] : []),
@@ -72,7 +68,7 @@ export default async function Home() {
         items={whyScharleHighlights}
       />
 
-      <section className={styles.section} style={{ paddingBottom: 0 }}>
+      <section className={styles.section}>
         <PatternField style={{ width: 260, height: 260, top: 8, right: -60 }} />
         <Reveal className={styles.sectionInner}>
           <span className={`label ${styles.eyebrow}`}>Featured Courses</span>

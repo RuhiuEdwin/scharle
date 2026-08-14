@@ -16,11 +16,6 @@ export type HeroSlide = {
   alt: string;
 };
 
-export type HeroHighlight = {
-  title: string;
-  body: string;
-};
-
 const AUTOPLAY_MS = 5500;
 const EASE_SNAP = "expo.out";
 
@@ -29,14 +24,12 @@ export function HeroCarousel({
   eyebrow,
   headline,
   subcopy,
-  highlights,
   children,
 }: {
   slides: HeroSlide[];
   eyebrow: string;
   headline: ReactNode;
   subcopy: string;
-  highlights: HeroHighlight[];
   children: ReactNode;
 }) {
   const [index, setIndex] = useState(0);
@@ -163,18 +156,6 @@ export function HeroCarousel({
         <p className={styles.sub}>{subcopy}</p>
         <div className={styles.ctas}>{children}</div>
       </div>
-
-      {highlights.length > 0 && (
-        <div className={styles.highlights}>
-          {highlights.map((h) => (
-            <div className={styles.highlightItem} key={h.title}>
-              <span className={styles.highlightMark} aria-hidden="true" />
-              <span className={styles.highlightTitle}>{h.title}</span>
-              <span className={styles.highlightBody}>{h.body}</span>
-            </div>
-          ))}
-        </div>
-      )}
 
       <button
         className={`${styles.arrow} ${styles.prev}`}

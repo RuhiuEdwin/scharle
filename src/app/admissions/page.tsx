@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import { BookingForm } from "@/components/BookingForm";
 import { EnrollmentForm } from "@/components/EnrollmentForm";
+import { PageHero } from "@/components/PageHero";
 import { PatternField, AccentRule } from "@/components/Decorative";
 import { ButtonLink } from "@/components/Button";
 import { getAdmissionsPage, getPaymentInfo, getCourses, getSiteInfo } from "@/lib/strapi";
@@ -40,12 +41,16 @@ export default async function Admissions(
 
   return (
     <main>
+      <PageHero
+        eyebrow="How to Join"
+        title="Three steps in"
+        subcopy="Call, visit, or apply online — enrolling at Scharle is quick, and we walk with you the whole way."
+        image={courses[0]?.image ?? ""}
+        alt="Scharle Beauty College studio"
+      />
+
       <section className={styles.section}>
         <Reveal className={styles.sectionInner}>
-          <span className={`label ${styles.eyebrow}`}>How to Join</span>
-          <h1 className="h-display" style={{ fontSize: 30 }}>
-            Three steps in
-          </h1>
           <StaggerReveal className={styles.steps}>
             {admissionsSteps.map((step, i) => (
               <StaggerItem className={styles.step} key={step.title}>

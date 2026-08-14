@@ -1,0 +1,73 @@
+.hero {
+  position: relative;
+  /* Same "bleed under the floating header" treatment as the homepage
+     hero, scaled down — see HeroCarousel.module.css for the full
+     rationale on the negative-margin/padding-top pairing. */
+  margin-top: -92px;
+  padding-top: 92px;
+  min-height: 46vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+@media (min-width: 760px) {
+  .hero {
+    margin-top: -100px;
+    padding-top: 100px;
+    min-height: 52vh;
+  }
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #111;
+}
+.media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 5%,
+    rgba(0, 0, 0, 0.28) 55%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 0 20px 40px;
+  color: var(--color-bright-white);
+  max-width: 640px;
+}
+@media (min-width: 760px) {
+  .content {
+    padding: 0 64px 56px;
+  }
+}
+.eyebrow {
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 10px;
+  display: block;
+}
+.title {
+  font-size: clamp(30px, 6vw, 52px);
+  color: var(--color-bright-white);
+}
+.sub {
+  max-width: 50ch;
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
+}

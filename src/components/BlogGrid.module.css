@@ -70,7 +70,7 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--sp-6);
+  gap: var(--sp-7);
   margin-top: var(--sp-5);
 }
 @media (min-width: 620px) {
@@ -89,6 +89,17 @@
   flex-direction: column;
   text-decoration: none;
   color: inherit;
+  /* filter: drop-shadow, not box-shadow — the card's true silhouette is
+     the union of two separately-rounded pieces (image on top, details
+     overlapping it), and drop-shadow follows that actual rendered shape
+     instead of drawing a rectangular shadow that would poke out past
+     the rounded corners. Two layered shadows (tight + soft) for a more
+     natural, less "stamped-on" elevation than a single flat one. */
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08)) drop-shadow(0 14px 28px rgba(0, 0, 0, 0.14));
+  transition: filter 280ms var(--ease-snap);
+}
+.card:hover {
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1)) drop-shadow(0 20px 38px rgba(0, 0, 0, 0.18));
 }
 
 .cardImage {
@@ -111,9 +122,16 @@
   position: relative;
   z-index: 1;
   margin-top: -28px;
-  background: var(--bg);
+  /* var(--bg-alt), not var(--bg) — the card sits directly on the page's
+     own background, so a same-color panel had zero contrast against it
+     in dark theme (a black box-shadow is also invisible on a near-black
+     page, which is the same failure twice over). --bg-alt is a
+     deliberately distinct shade from --bg in both themes, so the panel
+     reads as its own surface regardless of theme. */
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-bottom: none;
   border-radius: 18px 18px 0 0;
-  box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.08);
   padding: 20px 20px 22px;
   display: flex;
   flex-direction: column;

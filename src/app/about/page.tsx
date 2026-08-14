@@ -6,6 +6,7 @@ import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import { ImgPlaceholder } from "@/components/ImgPlaceholder";
 import { LayeredGrid } from "@/components/LayeredGrid";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
+import { PageHero } from "@/components/PageHero";
 import { PatternField, AccentRule } from "@/components/Decorative";
 import {
   getWhyScharleHighlights,
@@ -37,23 +38,13 @@ export default async function About() {
 
   return (
     <main>
-      <section className={`${styles.section} ${styles.twoCol} ${styles.split}`}>
-        <Reveal>
-          <ImgPlaceholder
-            caption="Who we are"
-            src={about.whoWeAre.image}
-            className={styles.whoImage}
-            priority
-          />
-        </Reveal>
-        <Reveal delay={0.1}>
-          <span className={`label ${styles.eyebrow}`}>Who We Are</span>
-          <h1 className={`h-display ${styles.headline}`}>{about.whoWeAre.heading}</h1>
-          <p className="body-text" style={{ marginTop: 12 }}>
-            {about.whoWeAre.body}
-          </p>
-        </Reveal>
-      </section>
+      <PageHero
+        eyebrow="Who We Are"
+        title={about.whoWeAre.heading}
+        subcopy={about.whoWeAre.body}
+        image={about.whoWeAre.image}
+        alt="Scharle Beauty College studio"
+      />
 
       <section className={`${styles.section} ${styles.alt} ${styles.twoCol} ${styles.split}`}>
         <PatternField style={{ width: 380, height: 380, top: -40, right: -40 }} />
