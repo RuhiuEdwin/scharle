@@ -60,14 +60,15 @@ export function HeroCarousel({
       nextEl.classList.add(styles.active);
       animating.current = false;
     } else {
-      gsap.set(nextEl, { opacity: 1, zIndex: 3 });
+      gsap.set(nextEl, { opacity: 0, zIndex: 3 });
       gsap.set(current, { zIndex: 2 });
       if (nextMedia) gsap.set(nextMedia, { scale: 1.1 });
-      gsap.to(current, { opacity: 0, duration: 0.6, ease: "power2.out" });
+      gsap.to(current, { opacity: 0, duration: 0.7, ease: "power2.inOut" });
+      gsap.to(nextEl, { opacity: 1, duration: 0.7, ease: "power2.inOut" });
       if (nextMedia) {
-        gsap.to(nextMedia, { scale: 1, duration: 1, ease: EASE_SNAP });
+        gsap.to(nextMedia, { scale: 1, duration: 1.2, ease: EASE_SNAP });
       }
-      gsap.delayedCall(0.6, () => {
+      gsap.delayedCall(0.7, () => {
         current.classList.remove(styles.active);
         nextEl.classList.add(styles.active);
         gsap.set(current, { opacity: 0 });

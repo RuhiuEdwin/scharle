@@ -67,7 +67,7 @@ export function CourseCarousel({
       next.classList.add(styles.active);
       animating.current = false;
     } else {
-      gsap.set(next, { opacity: 1, zIndex: 3 });
+      gsap.set(next, { opacity: 0, zIndex: 3 });
       gsap.set(current, { zIndex: 2 });
       if (nextMedia) gsap.set(nextMedia, { scale: 1.08 });
       gsap.set(children, { opacity: 0, y: 24 });
@@ -80,14 +80,15 @@ export function CourseCarousel({
           animating.current = false;
         },
       });
-      tl.to(current, { opacity: 0, duration: 0.5, ease: "power2.out" }, 0);
+      tl.to(current, { opacity: 0, duration: 0.6, ease: "power2.inOut" }, 0);
+      tl.to(next, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 0);
       if (nextMedia) {
-        tl.to(nextMedia, { scale: 1, duration: 0.9, ease: EASE_SNAP }, 0);
+        tl.to(nextMedia, { scale: 1, duration: 1.1, ease: EASE_SNAP }, 0);
       }
       tl.to(
         children,
-        { opacity: 1, y: 0, stagger: 0.06, duration: 0.5, ease: "back.out(1.6)" },
-        0.15,
+        { opacity: 1, y: 0, stagger: 0.06, duration: 0.5, ease: "power3.out" },
+        0.2,
       );
     }
 
