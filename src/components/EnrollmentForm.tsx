@@ -7,8 +7,9 @@ import { Field, fieldStyles } from "@/components/Field";
 import { Button } from "@/components/Button";
 import { AdmissionsChecklistItem } from "@/components/AdmissionsChecklist";
 import { StaggerReveal } from "@/components/StaggerReveal";
+import { Reveal } from "@/components/Reveal";
 import { submitEnrollment, type EnrollmentState } from "@/app/admissions/actions";
-import type { Course } from "@/lib/strapi";
+import type { Course, PaymentInfo } from "@/lib/strapi";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -20,10 +21,12 @@ export function EnrollmentForm({
   requirements,
   courses,
   defaultCourseSlug,
+  paymentInfo,
 }: {
   requirements: string[];
   courses: Course[];
   defaultCourseSlug?: string;
+  paymentInfo: PaymentInfo;
 }) {
   const [state, formAction, pending] = useActionState(
     submitEnrollment,
@@ -67,6 +70,44 @@ export function EnrollmentForm({
 
     formRef.current?.reset();
   }, [state, courses]);
+
+  if (state.status === "success") {
+    return (
+      <Reveal className={styles.successPanel}>
+        <p className={styles.formSuccess} role="status">
+          Application received — you&apos;re in. Complete payment below to
+          lock in your seat.
+        </p>
+
+        <div className={styles.feeSummary}>
+          <div>
+            <span className={`h-display ${styles.feeAmount}`}>
+              {paymentInfo.registrationFee}
+            </span>
+            <span className={`label ${styles.feeLabel}`}>Registration fee</span>
+          </div>
+          <p className="body-text" style={{ fontSize: 13.5, maxWidth: "42ch" }}>
+            {paymentInfo.tuitionNote}
+          </p>
+        </div>
+
+        <div className={styles.channels}>
+          {paymentInfo.channels.map((channel) => (
+            <div className={styles.channel} key={channel.label}>
+              <span className={`label ${styles.channelLabel}`}>{channel.label}</span>
+              {channel.lines.map((line) => (
+                <p className={styles.channelLine} key={line}>
+                  {line}
+                </p>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <p className={styles.disclaimer}>{paymentInfo.disclaimer}</p>
+      </Reveal>
+    );
+  }
 
   return (
     <form ref={formRef} action={formAction} className={styles.form} noValidate>
@@ -117,11 +158,6 @@ export function EnrollmentForm({
       {state.status === "error" && (
         <p className={styles.formError} role="alert">
           {state.message}
-        </p>
-      )}
-      {state.status === "success" && (
-        <p className={styles.formSuccess} role="status">
-          Application received — we'll follow up soon.
         </p>
       )}
 
