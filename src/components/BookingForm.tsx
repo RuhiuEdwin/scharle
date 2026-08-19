@@ -1,14 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Field, fieldStyles } from "@/components/Field";
 import { Button, type ButtonStatus } from "@/components/Button";
+import { submitBooking, type BookingState } from "@/app/admissions/actions";
 import type { Course } from "@/lib/strapi";
 
-// Submission (storage + admin email + honeypot/rate-limit enforcement) is
-// wired up in Sprint 4 against real BookingRequest endpoints. The
-// loading/success button lifecycle below is real UI, driven by a
-// placeholder timeout until that fetch call exists.
+const initialBookingState: BookingState = { status: "idle" };
+
 export function BookingForm({
   defaultCourseSlug,
   courses,
@@ -18,20 +17,31 @@ export function BookingForm({
   defaultCourseSlug?: string;
   courses: Course[];
 }) {
-  const [status, setStatus] = useState<ButtonStatus>("idle");
+  const [state, formAction, pending] = useActionState(
+    submitBooking,
+    initialBookingState,
+  );
+  const formRef = useRef<HTMLFormElement>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (status !== "idle") return;
-    setStatus("loading");
-    setTimeout(() => {
-      setStatus("success");
-      setTimeout(() => setStatus("idle"), 2200);
-    }, 1200);
-  }
+  // Brief "Sent ✓" confirmation, then revert so the form is ready for
+  // another booking — mirrors the old placeholder UI's timing.
+  useEffect(() => {
+    if (state.status !== "success") return;
+    setShowSuccess(true);
+    formRef.current?.reset();
+    const t = setTimeout(() => setShowSuccess(false), 2200);
+    return () => clearTimeout(t);
+  }, [state]);
+
+  const buttonStatus: ButtonStatus = pending
+    ? "loading"
+    : showSuccess
+      ? "success"
+      : "idle";
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 520 }} noValidate>
+    <form ref={formRef} action={formAction} style={{ maxWidth: 520 }} noValidate>
       <div className={`${fieldStyles.formGrid} ${fieldStyles.pair}`}>
         <Field label="Full name" errorMessage="Tell us your name.">
           <input type="text" name="name" required />
@@ -76,7 +86,20 @@ export function BookingForm({
         autoComplete="off"
         aria-hidden="true"
       />
-      <Button type="submit" variant="primary" status={status} successLabel="Sent">
+      {state.status === "error" && (
+        <p
+          role="alert"
+          style={{
+            color: "var(--color-press-red)",
+            fontSize: 13,
+            fontWeight: 600,
+            marginBottom: 8,
+          }}
+        >
+          {state.message}
+        </p>
+      )}
+      <Button type="submit" variant="primary" status={buttonStatus} successLabel="Sent">
         Submit
       </Button>
     </form>

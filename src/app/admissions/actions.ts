@@ -121,3 +121,69 @@ export async function submitEnrollment(
     };
   }
 }
+
+export type BookingState = {
+  status: "idle" | "success" | "error";
+  message?: string;
+};
+
+export async function submitBooking(
+  _prevState: BookingState,
+  formData: FormData,
+): Promise<BookingState> {
+  if (!WRITE_TOKEN) {
+    return {
+      status: "error",
+      message: "Booking requests aren't wired up yet — please call or WhatsApp us directly.",
+    };
+  }
+
+  // Honeypot: bots fill every field, including this hidden one. Return a
+  // fake success so they don't learn the field was a trap.
+  if (formData.get("company")) {
+    return { status: "success" };
+  }
+
+  const name = formData.get("name")?.toString().trim();
+  const phone = formData.get("phone")?.toString().trim();
+  const courseSlug = formData.get("course")?.toString() || undefined;
+  const preferredDate = formData.get("preferredDate")?.toString() || undefined;
+
+  if (!name || !phone) {
+    return { status: "error", message: "Please fill in your name and phone number." };
+  }
+
+  try {
+    const courseInterest = courseSlug
+      ? await resolveCourseDocumentId(courseSlug)
+      : undefined;
+
+    const createRes = await fetch(`${STRAPI_URL}/api/booking-requests`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${WRITE_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data: {
+          name,
+          phone,
+          courseInterest,
+          preferredDate: preferredDate || undefined,
+          submittedAt: new Date().toISOString(),
+        },
+      }),
+    });
+    if (!createRes.ok) {
+      throw new Error(`Strapi booking-request create failed: ${createRes.status}`);
+    }
+
+    return { status: "success" };
+  } catch (err) {
+    console.error("Booking submission failed:", err);
+    return {
+      status: "error",
+      message: "Something went wrong sending your booking — please try again or contact us directly.",
+    };
+  }
+}
