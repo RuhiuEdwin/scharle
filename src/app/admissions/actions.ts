@@ -11,6 +11,7 @@ export type EnrollmentState = {
     email: string;
     phone: string;
     course?: string;
+    documents?: { name: string; url: string }[];
   };
 };
 
@@ -56,6 +57,7 @@ export async function submitEnrollment(
 
   try {
     let documentIds: number[] = [];
+    let uploadedDocuments: { name: string; url: string }[] = [];
     if (files.length > 0) {
       const uploadForm = new FormData();
       for (const file of files) uploadForm.append("files", file, file.name);
@@ -67,8 +69,12 @@ export async function submitEnrollment(
       if (!uploadRes.ok) {
         throw new Error(`Strapi upload failed: ${uploadRes.status}`);
       }
-      const uploaded: { id: number }[] = await uploadRes.json();
+      const uploaded: { id: number; name: string; url: string }[] = await uploadRes.json();
       documentIds = uploaded.map((f) => f.id);
+      uploadedDocuments = uploaded.map((f) => ({
+        name: f.name,
+        url: f.url.startsWith("http") ? f.url : `${STRAPI_URL}${f.url}`,
+      }));
     }
 
     const courseInterest = courseSlug
@@ -99,7 +105,13 @@ export async function submitEnrollment(
 
     return {
       status: "success",
-      submitted: { fullName, email, phone, course: courseSlug },
+      submitted: {
+        fullName,
+        email,
+        phone,
+        course: courseSlug,
+        documents: uploadedDocuments,
+      },
     };
   } catch (err) {
     console.error("Enrollment submission failed:", err);

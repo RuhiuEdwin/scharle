@@ -54,6 +54,11 @@ export function EnrollmentForm({
     }
 
     const course = courses.find((c) => c.slug === state.submitted?.course);
+    const documents = state.submitted.documents ?? [];
+    const documents_list =
+      documents.length > 0
+        ? documents.map((d) => `${d.name}: ${d.url}`).join("\n")
+        : "No documents attached.";
     emailjs
       .send(
         EMAILJS_SERVICE_ID,
@@ -63,6 +68,7 @@ export function EnrollmentForm({
           applicant_email: state.submitted.email,
           applicant_phone: state.submitted.phone,
           course_of_interest: course?.name ?? "Not specified",
+          documents_list,
         },
         { publicKey: EMAILJS_PUBLIC_KEY },
       )
