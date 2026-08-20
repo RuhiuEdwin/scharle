@@ -10,7 +10,10 @@ const strapiUrlParsed = (() => {
 })();
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Only for the Docker build (see web/Dockerfile) — Netlify's own Next.js
+  // Runtime does its own serverless bundling and doesn't need or want this;
+  // leaving it on unconditionally broke the Netlify build.
+  ...(process.env.DOCKER_BUILD === "1" ? { output: "standalone" as const } : {}),
   images: {
     remotePatterns: [
       {
