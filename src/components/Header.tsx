@@ -9,6 +9,7 @@ import styles from "./Header.module.css";
 import { navLinks } from "@/lib/content";
 import { ButtonLink } from "@/components/Button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { THEME_MODE } from "@/lib/theme";
 
 const EASE_SNAP = "cubic-bezier(0.16, 1.35, 0.34, 1)";
 
@@ -191,7 +192,7 @@ export function Header() {
       </ul>
 
       <div className={styles.ctaSlot}>
-        <ThemeToggle />
+        {THEME_MODE === "both" && <ThemeToggle />}
         <ButtonLink href="/admissions" variant="primary" magnetic>
           Apply Now
         </ButtonLink>
@@ -235,7 +236,9 @@ export function Header() {
               Book a Visit
             </ButtonLink>
           </div>
-          <ThemeToggle className={styles.mobileThemeToggle} />
+          {THEME_MODE === "both" && (
+            <ThemeToggle className={styles.mobileThemeToggle} />
+          )}
         </div>
       )}
     </header>

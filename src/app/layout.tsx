@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { ScrollTriggerRefresh } from "@/components/ScrollTriggerRefresh";
 import { getSiteInfo } from "@/lib/strapi";
 import { SITE_URL } from "@/lib/seo";
+import { THEME_MODE } from "@/lib/theme";
 import "./globals.css";
 
 const description =
@@ -77,13 +78,17 @@ export default async function RootLayout({
     >
       <body>
         {/* Sets data-theme before hydration so there's no flash of the wrong
-            theme: an explicit saved choice wins, otherwise system
-            preference — always resolves to a concrete "light"/"dark"
-            attribute so globals.css never has to handle an "unset" case. */}
+            theme. THEME_MODE "both" resolves it the usual way (saved choice,
+            else system preference); "dark"/"light" just pins the attribute —
+            no toggle is rendered in that case (see Header), so there's
+            nothing else to resolve. */}
         <script
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();`,
+            __html:
+              THEME_MODE === "both"
+                ? `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();`
+                : `document.documentElement.setAttribute('data-theme','${THEME_MODE}');`,
           }}
         />
         <script
