@@ -161,3 +161,17 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+.fineGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.credit {
+  color: var(--text-mute);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.credit:hover,
+.credit:focus-visible {
+  color: var(--color-signal-red);
+}

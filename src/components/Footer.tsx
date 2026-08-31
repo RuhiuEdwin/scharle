@@ -96,10 +96,20 @@ export async function Footer() {
       </div>
 
       <p className={styles.fine}>
-        <span>
-          © {new Date().getFullYear()} {siteInfo.name}
+        <span className={styles.fineGroup}>
+          <span>
+            © {new Date().getFullYear()} {siteInfo.name}
+          </span>
+          <span>{siteInfo.address}</span>
         </span>
-        <span>{siteInfo.address}</span>
+        <a
+          href="https://ubunifu.space"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.credit}
+        >
+          Built by ubunifuSpace
+        </a>
       </p>
     </footer>
   );
