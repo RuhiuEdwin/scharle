@@ -40,7 +40,13 @@ export function ContactForm() {
         autoComplete="off"
         aria-hidden="true"
       />
-      <Button type="submit" variant="primary" status={status} successLabel="Sent">
+      <Button
+        type="submit"
+        variant="primary"
+        status={status}
+        successLabel="Sent"
+        event="contact-submit"
+      >
         Send
       </Button>
     </form>

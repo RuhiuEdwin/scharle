@@ -186,12 +186,13 @@ export function CourseCarousel({
                   href={`/admissions?course=${course.slug}`}
                   variant="primary"
                   magnetic
+                  event="apply-now"
                 >
                   Enquire about this course
                 </ButtonLink>
               ) : (
                 <>
-                  <ButtonLink href="/admissions" variant="primary">
+                  <ButtonLink href="/admissions" variant="primary" event="apply-now">
                     Apply for this course
                   </ButtonLink>
                   <ButtonLink href={`/courses/${course.slug}`} variant="secondary">

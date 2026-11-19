@@ -60,7 +60,7 @@ export function CourseAccordion({ courses }: { courses: Course[] }) {
                       ))}
                     </ul>
                     <div className={styles.applyBtn}>
-                      <ButtonLink href="/admissions" variant="primary">
+                      <ButtonLink href="/admissions" variant="primary" event="apply-now">
                         Apply for this course
                       </ButtonLink>
                       <ButtonLink href={`/courses/${course.slug}`} variant="secondary">

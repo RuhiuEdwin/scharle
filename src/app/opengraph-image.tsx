@@ -59,7 +59,7 @@ export default async function Image() {
             justifyContent: "center",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          { }
           <img src={markSrc} width={140} height={140} alt="" />
           <div
             style={{

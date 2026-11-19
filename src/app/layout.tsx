@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { display, jakarta } from "./fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Analytics } from "@/components/Analytics";
 import { ScrollTriggerRefresh } from "@/components/ScrollTriggerRefresh";
 import { getSiteInfo } from "@/lib/strapi";
 import { SITE_URL } from "@/lib/seo";
@@ -83,7 +84,7 @@ export default async function RootLayout({
             no toggle is rendered in that case (see Header), so there's
             nothing else to resolve. */}
         <script
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{
             __html:
               THEME_MODE === "both"
@@ -93,13 +94,14 @@ export default async function RootLayout({
         />
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <ScrollTriggerRefresh />
         <Header />
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

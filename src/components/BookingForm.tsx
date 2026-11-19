@@ -22,17 +22,20 @@ export function BookingForm({
     initialBookingState,
   );
   const formRef = useRef<HTMLFormElement>(null);
-  const [showSuccess, setShowSuccess] = useState(false);
+  // The action returns a fresh object per submission, so remembering the
+  // one already acknowledged tells "just succeeded" apart from "succeeded
+  // a while ago" without mirroring the status into state of our own.
+  const [acknowledged, setAcknowledged] = useState<BookingState | null>(null);
+  const showSuccess = state.status === "success" && state !== acknowledged;
 
   // Brief "Sent ✓" confirmation, then revert so the form is ready for
   // another booking — mirrors the old placeholder UI's timing.
   useEffect(() => {
-    if (state.status !== "success") return;
-    setShowSuccess(true);
+    if (!showSuccess) return;
     formRef.current?.reset();
-    const t = setTimeout(() => setShowSuccess(false), 2200);
+    const t = setTimeout(() => setAcknowledged(state), 2200);
     return () => clearTimeout(t);
-  }, [state]);
+  }, [showSuccess, state]);
 
   const buttonStatus: ButtonStatus = pending
     ? "loading"
@@ -99,7 +102,13 @@ export function BookingForm({
           {state.message}
         </p>
       )}
-      <Button type="submit" variant="primary" status={buttonStatus} successLabel="Sent">
+      <Button
+        type="submit"
+        variant="primary"
+        status={buttonStatus}
+        successLabel="Sent"
+        event="booking-submit"
+      >
         Submit
       </Button>
     </form>

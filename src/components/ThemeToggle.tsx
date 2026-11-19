@@ -1,21 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import styles from "./ThemeToggle.module.css";
 
-export function ThemeToggle({ className }: { className?: string }) {
-  const [dark, setDark] = useState(false);
+/** The `data-theme` attribute is the theme's single source of truth — an
+ * inline script in the document sets it before paint. Reading it through
+ * an observer rather than copying it into state keeps both toggles (desktop
+ * header and mobile menu) showing the same thing whichever one was pressed,
+ * and leaves SSR rendering the light-theme label as it always has. */
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+}
 
-  useEffect(() => {
-    setDark(document.documentElement.getAttribute("data-theme") === "dark");
-  }, []);
+const isDark = () =>
+  document.documentElement.getAttribute("data-theme") === "dark";
+
+export function ThemeToggle({ className }: { className?: string }) {
+  const dark = useSyncExternalStore(subscribe, isDark, () => false);
 
   function toggle() {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.setAttribute("data-theme", next ? "dark" : "light");
+    const next = dark ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
     try {
-      localStorage.setItem("theme", next ? "dark" : "light");
+      localStorage.setItem("theme", next);
     } catch {
       // localStorage unavailable (private mode etc.) — theme just won't persist.
     }

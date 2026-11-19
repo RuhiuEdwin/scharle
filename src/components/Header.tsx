@@ -26,9 +26,14 @@ export function Header() {
   const ctaRef = useRef<HTMLDivElement>(null);
   const reducedRef = useRef(false);
 
-  useEffect(() => {
+  // Close the menu when the route changes. Adjusted during render rather
+  // than in an effect so the menu is already gone in the same pass that
+  // renders the new page, instead of one render later.
+  const [renderedPath, setRenderedPath] = useState(pathname);
+  if (renderedPath !== pathname) {
+    setRenderedPath(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     function onScroll() {
@@ -77,12 +82,10 @@ export function Header() {
     reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }, []);
 
+  // Mounting happens on the button press (below); this only runs the
+  // close animation and unmounts once it has played.
   useEffect(() => {
-    if (open) {
-      setMounted(true);
-      return;
-    }
-    if (!mounted) return;
+    if (open || !mounted) return;
     const overlay = overlayRef.current;
     if (!overlay || reducedRef.current) {
       setMounted(false);
@@ -193,7 +196,7 @@ export function Header() {
 
       <div className={styles.ctaSlot}>
         {THEME_MODE === "both" && <ThemeToggle />}
-        <ButtonLink href="/admissions" variant="primary" magnetic>
+        <ButtonLink href="/admissions" variant="primary" magnetic event="apply-now">
           Apply Now
         </ButtonLink>
       </div>
@@ -203,7 +206,10 @@ export function Header() {
         className={styles.burger}
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          setMounted(true);
+          setOpen((v) => !v);
+        }}
       >
         <span />
         <span />
@@ -229,10 +235,10 @@ export function Header() {
             ))}
           </ul>
           <div className={styles.mobileCtas} ref={ctaRef}>
-            <ButtonLink href="/admissions" variant="primary" full>
+            <ButtonLink href="/admissions" variant="primary" full event="apply-now">
               Apply Now
             </ButtonLink>
-            <ButtonLink href="/admissions" variant="secondary" full>
+            <ButtonLink href="/admissions" variant="secondary" full event="book-a-visit">
               Book a Visit
             </ButtonLink>
           </div>

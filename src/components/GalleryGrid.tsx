@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "./Gallery.module.css";
@@ -8,17 +8,20 @@ import { ImgPlaceholder } from "@/components/ImgPlaceholder";
 import { StaggerReveal, StaggerItem } from "@/components/StaggerReveal";
 import type { GalleryItem } from "@/lib/strapi";
 
+// `createPortal` needs `document.body`, which does not exist while the page
+// renders on the server. Nothing to subscribe to: the answer flips once,
+// when React hands the tree over to the browser.
+const noopSubscribe = () => () => {};
+const onClient = () => true;
+const onServer = () => false;
+
 const CATEGORIES = ["All", "Studio", "Students"] as const;
 const EASE_SNAP = [0.16, 1.35, 0.34, 1] as const;
 
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   const [filter, setFilter] = useState<(typeof CATEGORIES)[number]>("All");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(noopSubscribe, onClient, onServer);
 
   const filtered =
     filter === "All" ? items : items.filter((i) => i.category === filter);

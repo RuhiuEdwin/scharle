@@ -54,10 +54,10 @@ export default async function Home() {
           { image: about.whoWeAre.image, alt: "Scharle studio interior" },
         ]}
       >
-        <ButtonLink href="/admissions" variant="primary" magnetic>
+        <ButtonLink href="/admissions" variant="primary" magnetic event="apply-now">
           Apply Now
         </ButtonLink>
-        <ButtonLink href="/admissions" variant="secondary">
+        <ButtonLink href="/admissions" variant="secondary" event="book-a-visit">
           Book a Visit
         </ButtonLink>
       </HeroCarousel>

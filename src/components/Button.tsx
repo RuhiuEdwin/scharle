@@ -60,6 +60,7 @@ export function ButtonLink({
   full,
   magnetic,
   external,
+  event,
 }: {
   href: string;
   variant?: Variant;
@@ -68,6 +69,10 @@ export function ButtonLink({
   magnetic?: boolean;
   /** Opens in a new tab with rel="noreferrer" — for links off-site (e.g. Calendly). */
   external?: boolean;
+  /** Analytics event name. Set it on conversion actions only; the tracking
+   * script picks the attribute up from the click itself, so nothing here
+   * runs when analytics is not configured. */
+  event?: string;
 }) {
   const wrapRef = useMagnetic(magnetic);
   const btn = (
@@ -75,6 +80,7 @@ export function ButtonLink({
       href={href}
       className={`${styles.btn} ${variantClass[variant]} ${full ? styles.full : ""}`}
       whileTap={{ scale: 0.97 }}
+      data-umami-event={event}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
     >
       <span>{children}</span>
@@ -98,6 +104,7 @@ export function Button({
   status = "idle",
   successLabel = "Sent",
   onClick,
+  event,
 }: {
   variant?: Variant;
   children: ReactNode;
@@ -106,12 +113,15 @@ export function Button({
   status?: ButtonStatus;
   successLabel?: string;
   onClick?: () => void;
+  /** Analytics event name — see ButtonLink. */
+  event?: string;
 }) {
   return (
     <motion.button
       type={type}
       onClick={onClick}
       disabled={status !== "idle"}
+      data-umami-event={event}
       className={`${styles.btn} ${variantClass[variant]} ${full ? styles.full : ""} ${status === "success" ? styles.success : ""}`}
       whileTap={status === "idle" ? { scale: 0.97 } : undefined}
     >
