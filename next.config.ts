@@ -25,10 +25,6 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
         port: "1337",
       },
-      {
-        protocol: "https",
-        hostname: "*.up.railway.app",
-      },
       // Matches whatever host NEXT_PUBLIC_STRAPI_URL points at (e.g. the
       // production CMS subdomain) so this doesn't need a hardcoded entry
       // per deployment target.
